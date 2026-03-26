@@ -1,0 +1,30 @@
+name: CI (Lint & Build)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20 # 최신 LTS 버전 권장
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci # package-lock.json을 기준으로 엄격하게 설치
+
+      - name: Lint check
+        run: npm run lint
+
+      - name: Build check
+        run: npm run build # 빌드가 깨지는지 미리 확인하는 것이 중요합니다.
