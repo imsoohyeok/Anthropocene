@@ -28,3 +28,10 @@ jobs:
 
       - name: Build check
         run: npm run build # 빌드가 깨지는지 미리 확인하는 것이 중요합니다.
+
+      - name: run Lighthouse CI
+        run: |
+          npm install -g @lhci/cli@0.13.x
+          lhci autoreview
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
