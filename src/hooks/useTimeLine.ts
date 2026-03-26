@@ -1,4 +1,3 @@
-// src/hooks/useTimeline.ts
 import { timelineData } from "@/data/timeline";
 
 export const useTimeline = (currentYear: number) => {
