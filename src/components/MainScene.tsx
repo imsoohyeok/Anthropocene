@@ -40,7 +40,6 @@ export default function MainScene({ hazardLevel, co2 }: MainSceneProps) {
         ANTHROPOCENE
       </div>
 
-      {/* 나중에 이 위치에 Three.js <Canvas /> 가 들어오게 됩니다! */}
       {/* THREE.JS CANVAS 레이어 */}
       <div className="absolute inset-0 z-10">
         <Canvas

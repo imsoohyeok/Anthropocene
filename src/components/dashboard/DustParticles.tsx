@@ -1,14 +1,9 @@
-// src/components/visuals/DustParticles.tsx
 "use client";
 
 import { useRef, useMemo, useState, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-
-interface DustParticlesProps {
-  hazardLevel: number;
-  co2: number;
-}
+import { DustParticlesProps } from "@/types/DustParticles";
 
 const MAX_PARTICLES = 10000; // 메모리에 올려둘 최대 입자 수 고정
 
@@ -40,7 +35,6 @@ export default function DustParticles({
   }, [co2]);
 
   // React의 상태(State)가 아니라 외부 시스템(Three.js)에 직접 변경을 지시합니다.
-  // 이렇게 하면 Cascading Render 에러가 완벽히 사라집니다.
   useEffect(() => {
     if (geometryRef.current) {
       geometryRef.current.setDrawRange(0, currentCount);

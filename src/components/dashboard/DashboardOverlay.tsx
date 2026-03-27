@@ -27,19 +27,19 @@ export default function DashboardOverlay({
       {/* 메트릭 그리드 */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl pointer-events-auto">
         <MetricCard
-          label="CO2 Concentration"
+          label="이산화탄소 배출량"
           value={metrics.co2.toFixed(1)}
           unit="ppm"
           trend={metrics.co2 > 350}
         />
         <MetricCard
-          label="Global Temp Anomaly"
+          label="지표면 온도 상승률"
           value={`+${metrics.temp.toFixed(2)}`}
           unit="°C"
           trend={metrics.temp > 1.0}
         />
         <MetricCard
-          label="Sea Level Rise"
+          label="해수면 상승률"
           value={`+${metrics.seaLevel.toFixed(0)}`}
           unit="mm"
           trend={metrics.seaLevel > 150}
