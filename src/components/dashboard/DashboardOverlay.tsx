@@ -34,15 +34,15 @@ export default function DashboardOverlay({
         />
         <MetricCard
           label="지표면 온도 상승률"
-          value={`+${metrics.temp.toFixed(2)}`}
+          value={`${metrics.temp.toFixed(2)}`}
           unit="°C"
           trend={metrics.temp > 1.0}
         />
         <MetricCard
           label="해수면 상승률"
-          value={`+${metrics.seaLevel.toFixed(0)}`}
+          value={`${metrics.seaLevel.toFixed(0)}`}
           unit="mm"
-          trend={metrics.seaLevel > 150}
+          trend={metrics.seaLevel > 50}
         />
       </div>
     </div>
