@@ -16,6 +16,7 @@ export default function YearController({ year, setYear }: YearControllerProps) {
             type="range"
             min="1850"
             max="2100"
+            aria-label="Select timeline year"
             step="1"
             value={year}
             onChange={(e) => setYear(Number(e.target.value))}
@@ -23,7 +24,7 @@ export default function YearController({ year, setYear }: YearControllerProps) {
           />
         </div>
 
-        <div className="flex justify-between mt-4 text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
+        <div className="flex justify-between mt-4 text-[10px] font-mono text-zinc-400 uppercase tracking-widest">
           <div className="flex flex-col items-start gap-1">
             <span className="h-2 w-px bg-zinc-800"></span>
             <span>1850</span>
