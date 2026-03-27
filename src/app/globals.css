@@ -6,6 +6,8 @@
   --background-end-rgb: 0, 0, 0;
 }
 
+/* html 태그 추가 및 글로벌 적용 */
+html,
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -15,9 +17,28 @@ body {
     )
     rgb(var(--background-start-rgb));
   overflow-x: hidden; /* 가로 스크롤 방지 */
+
+  /* 전역 스크롤바 숨김 처리 */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
-/* 캔버스가 배경으로 깔릴 때를 대비한 설정 */
+/* Chrome, Safari, Opera를 위한 웹킷 스크롤바 숨김 */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
 canvas {
   touch-action: none;
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }
