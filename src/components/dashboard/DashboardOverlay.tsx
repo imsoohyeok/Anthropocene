@@ -13,7 +13,7 @@ export default function DashboardOverlay({
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-8 pt-20 pb-40">
       {/* 헤더 섹션 */}
-      <div className="text-center mb-16 max-w-2xl">
+      <div className="text-center my-16 max-w-2xl">
         <h1 className="text-9xl font-black tracking-tighter mb-4 tabular-nums text-white drop-shadow-2xl">
           {year}
         </h1>
@@ -50,7 +50,7 @@ export default function DashboardOverlay({
       </div>
       {/* 페이지 전환 버튼 */}
       <div
-        className={`mt-20 flex flex-col items-center justify-center w-full transition-all duration-1000 transform ${
+        className={`mt-10 flex flex-col items-center justify-center w-full transition-all duration-1000 transform ${
           isEndGame
             ? "opacity-100 translate-y-0 pointer-events-auto"
             : "opacity-0 translate-y-10 pointer-events-none"
@@ -58,7 +58,7 @@ export default function DashboardOverlay({
       >
         <Link
           href="/quiz"
-          className="relative inline-flex items-center justify-center group px-10 py-5 bg-red-600 text-white font-bold text-xl rounded-full overflow-hidden shadow-[0_0_30px_rgba(220,38,38,0.5)] hover:shadow-[0_0_50px_rgba(220,38,38,0.8)] hover:scale-105 transition-all duration-300"
+          className="px-8 py-3 bg-red-600 text-white font-bold rounded-full hover:bg-red-500 transition-all shadow-lg hover:shadow-red-500/50 text-lg tracking-normal w-auto min-w-[200px] pointer-events-auto"
         >
           {/* 버튼 호버 시 빛나는 효과 애니메이션 */}
           <div className="absolute inset-0 w-full h-full bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />

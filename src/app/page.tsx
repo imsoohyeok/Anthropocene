@@ -31,7 +31,7 @@ export default function Home() {
         </div>
 
         {/* UI 레이어 */}
-        <div className="relative z-10 pointer-events-none h-full flex flex-col justify-center">
+        <div className="relative z-10 pointer-events-none h-full flex flex-col justify-center w-full max-w-4xl mx-auto px-4 md:px-0">
           <DashboardOverlay
             year={year}
             label={label}
@@ -41,8 +41,10 @@ export default function Home() {
         </div>
 
         {/* 컨트롤 레이어 */}
-        <div className="absolute bottom-0 w-full z-20">
-          <YearController year={year} setYear={setYear} />
+        <div className="absolute bottom-0 w-full z-20 pb-8">
+          <div className="w-full max-w-4xl mx-auto px-4 md:px-0">
+            <YearController year={year} setYear={setYear} />
+          </div>
         </div>
       </div>
     </main>
