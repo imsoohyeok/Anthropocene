@@ -1,20 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { useQuizGame } from "@/hooks/useQuizGame";
-import { dummyQuizzes } from "@/data/QuizData";
+import { QuizBoardProps } from "@/types/QuizBoard";
 
-export default function QuizBoard() {
-  const {
-    currentQuiz,
-    currentIndex,
-    waterLevel,
-    isGameOver,
-    isFinished,
-    score,
-    handleAnswer,
-  } = useQuizGame(dummyQuizzes);
-
+export default function QuizBoard({
+  currentQuiz,
+  currentIndex,
+  waterLevel,
+  isGameOver,
+  isFinished,
+  score,
+  handleAnswer,
+  totalQuizzes,
+}: QuizBoardProps) {
   // 팝업 상태 관리: null이면 팝업 닫힘, 객체가 있으면 팝업 열림
   const [feedback, setFeedback] = useState<{
     isCorrect: boolean;
@@ -73,7 +71,7 @@ export default function QuizBoard() {
   }
 
   return (
-    <div className="relative w-full h-screen flex flex-col items-center justify-center px-6 z-10 bg-black text-white">
+    <div className="relative w-full h-screen flex flex-col items-center justify-center px-6 z-10 text-white">
       {/* 1. 상단 상태 바 */}
       <div className="absolute top-12 w-full max-w-4xl flex justify-between items-end px-4">
         <div className="flex flex-col">
@@ -82,9 +80,7 @@ export default function QuizBoard() {
           </span>
           <span className="text-3xl font-bold text-zinc-100">
             {currentIndex + 1}{" "}
-            <span className="text-zinc-600 text-xl">
-              / {dummyQuizzes.length}
-            </span>
+            <span className="text-zinc-600 text-xl">/ {totalQuizzes}</span>
           </span>
         </div>
         <div className="flex flex-col items-end">

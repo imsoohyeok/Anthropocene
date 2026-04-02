@@ -1,9 +1,17 @@
-import QuizBoard from "@/components/quiz/QuizBoard";
+"use client";
 
-export default function QuizPage() {
+import QuizBoard from "@/components/quiz/QuizBoard";
+import RisingSea from "@/components/quiz/RisingSea";
+import { dummyQuizzes } from "@/data/QuizData";
+import { useQuizGame } from "@/hooks/useQuizGame";
+
+export default function Home() {
+  const quizGameState = useQuizGame(dummyQuizzes);
+
   return (
-    <>
-      <QuizBoard />
-    </>
+    <main className="relative min-h-screen bg-black text-white overflow-hidden">
+      <RisingSea waterLevel={quizGameState.waterLevel} />
+      <QuizBoard {...quizGameState} />
+    </main>
   );
 }
