@@ -1,39 +1,56 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { QuizItem } from "@/types/quiz";
 
-export const useQuizGame = (quizzes: QuizItem[]) => {
-  const [currentIndex, setCurrentIndex] = useState(0); // 현재 문제 번호
-  const [waterLevel, setWaterLevel] = useState(0); // 해수면 높이 (0~100)
-  const [correctCount, setCorrectCount] = useState(0); // 정답 개수
-  const [isGameOver, setIsGameOver] = useState(false); // 게임 오버 여부
-  const [isFinished, setIsFinished] = useState(false); // 모든 문제 완료 여부
+// 피셔-예이츠(Fisher-Yates) 셔플 알고리즘
+const shuffleArray = <T>(array: T[]): T[] => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
 
-  // 현재 진행 중인 퀴즈 데이터
+export const useQuizGame = (initialQuizzes: QuizItem[]) => {
+  const [quizzes, setQuizzes] = useState(() => shuffleArray(initialQuizzes));
+
+  const [isReady, setIsReady] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [waterLevel, setWaterLevel] = useState(0);
+  const [correctCount, setCorrectCount] = useState(0);
+  const [isGameOver, setIsGameOver] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setQuizzes(shuffleArray(initialQuizzes));
+      setIsReady(true);
+    }, 0);
+
+    return () => clearTimeout(timer);
+  }, [initialQuizzes]);
+
   const currentQuiz = useMemo(
     () => quizzes[currentIndex],
     [currentIndex, quizzes],
   );
 
-  // 정답 선택 처리 함수
   const handleAnswer = useCallback(
     (isCorrect: boolean) => {
       if (isGameOver || isFinished) return;
 
       if (isCorrect) {
-        // 정답인 경우: 점수 올리고 다음 문제로
         setCorrectCount((prev) => prev + 1);
       } else {
-        // 오답인 경우: 해수면 상승 및 게임 오버 체크
         const nextWaterLevel = waterLevel + currentQuiz.penalty;
         if (nextWaterLevel >= 100) {
           setWaterLevel(100);
           setIsGameOver(true);
-          return; // 게임 종료
+          return;
         }
         setWaterLevel(nextWaterLevel);
       }
 
-      // 다음 문제로 넘어가기 (마지막 문제면 종료)
       if (currentIndex < quizzes.length - 1) {
         setCurrentIndex((prev) => prev + 1);
       } else {
@@ -50,16 +67,18 @@ export const useQuizGame = (quizzes: QuizItem[]) => {
     ],
   );
 
-  // 게임 재시작 함수
+  // 게임을 다시 시작할 때 호출하는 함수
   const resetGame = useCallback(() => {
+    setQuizzes(shuffleArray(initialQuizzes));
     setCurrentIndex(0);
     setWaterLevel(0);
     setCorrectCount(0);
     setIsGameOver(false);
     setIsFinished(false);
-  }, []);
+  }, [initialQuizzes]);
 
   return {
+    isReady,
     currentQuiz,
     currentIndex,
     waterLevel,
@@ -69,6 +88,6 @@ export const useQuizGame = (quizzes: QuizItem[]) => {
     handleAnswer,
     resetGame,
     totalQuizzes: quizzes.length,
-    score: Math.round((correctCount / quizzes.length) * 100), // 현재까지의 정답률(%)
+    score: Math.round((correctCount / quizzes.length) * 100) || 0,
   };
 };

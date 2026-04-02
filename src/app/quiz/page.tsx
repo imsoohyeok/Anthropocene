@@ -8,6 +8,10 @@ import { useQuizGame } from "@/hooks/useQuizGame";
 export default function Home() {
   const quizGameState = useQuizGame(dummyQuizzes);
 
+  if (!quizGameState.isReady) {
+    return <main className="min-h-screen bg-black" />;
+  }
+
   return (
     <main className="relative min-h-screen bg-black text-white overflow-hidden">
       <RisingSea waterLevel={quizGameState.waterLevel} />
