@@ -1,40 +1,70 @@
-'use client'; // 클라이언트 컴포넌트 선언
+"use client";
 
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { MainSceneProps } from "@/types/MainScene";
+import { Canvas } from "@react-three/fiber";
+import { Bloom, EffectComposer } from "@react-three/postprocessing";
+import DustParticles from "./dashboard/DustParticles";
 
-gsap.registerPlugin(ScrollTrigger);
-
-export default function MainScene() {
+export default function MainScene({ hazardLevel, co2 }: MainSceneProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // 여기에 스크롤 기반 애니메이션 로직이 들어갈 예정입니다.
-    // 예: 스크롤에 따라 CO2 농도 수치가 변하거나 배경색이 붉게 변하는 효과
-  }, []);
+    gsap.to(textRef.current, {
+      scale: 1 + hazardLevel * 0.5,
+      opacity: 0.1 + hazardLevel * 0.3,
+      duration: 0.8,
+      ease: "power2.out",
+    });
+
+    gsap.to(containerRef.current, {
+      backgroundColor: `rgba(${hazardLevel * 60}, 10, 10, 1)`,
+      duration: 0.8,
+      ease: "power2.out",
+    });
+  }, [hazardLevel, co2]);
 
   return (
-    <div ref={containerRef} className="relative w-full">
-      {/* 1. 고정 배경 (3D 지구나 타임라인 배경) */}
-      <div className="fixed top-0 left-0 w-full h-screen -z-10 bg-zinc-900">
-        <div className="flex items-center justify-center h-full text-zinc-700 text-9xl font-bold opacity-10">
-          ANTHROPOCENE
-        </div>
+    <div
+      ref={containerRef}
+      className="absolute inset-0 w-full h-full bg-zinc-950 flex items-center justify-center overflow-hidden"
+    >
+      {/* 백그라운드 타이포그래피 (시각적 효과용) */}
+      <div
+        ref={textRef}
+        className="text-zinc-700 text-[10rem] md:text-[15rem] font-black tracking-tighter whitespace-nowrap select-none"
+        style={{ opacity: 0.1 }} // 초기 상태
+      >
+        ANTHROPOCENE
       </div>
 
-      {/* 2. 스크롤용 섹션들 */}
-      <section className="h-screen flex items-center justify-center p-10">
-        <h2 className="text-4xl font-light tracking-tist">1750: 산업화의 서막</h2>
-      </section>
-      
-      <section className="h-screen flex items-center justify-center p-10">
-        <h2 className="text-4xl font-light tracking-widest">1950: 대 가속 (Great Acceleration)</h2>
-      </section>
+      {/* THREE.JS CANVAS 레이어 */}
+      <div className="absolute inset-0 z-10">
+        <Canvas
+          camera={{ position: [0, 0, 5], fov: 75 }}
+          dpr={[1, 2]} // 고해상도 지원
+        >
+          {/* 어두운 우주 공간 분위기를 위한 안개(Fog) */}
+          <fog attach="fog" args={["#0a0a0a", 2, 10]} />
 
-      <section className="h-screen flex items-center justify-center p-10">
-        <h2 className="text-4xl font-light tracking-widest text-red-500">2026: 임계점</h2>
-      </section>
+          <ambientLight intensity={0.2} />
+
+          {/* 우주 먼지 컴포넌트에 데이터 전달 */}
+          <DustParticles hazardLevel={hazardLevel} co2={co2} />
+
+          {/* 빛 효과(Bloom)를 추가하여 먼지들이 반짝이게 만듭니다. */}
+          <EffectComposer>
+            <Bloom
+              luminanceThreshold={0.2}
+              luminanceSmoothing={0.9}
+              height={300}
+              intensity={0.5}
+            />
+          </EffectComposer>
+        </Canvas>
+      </div>
     </div>
   );
 }
