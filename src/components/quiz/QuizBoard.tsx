@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { QuizBoardProps } from "@/types/QuizBoard";
 
 export default function QuizBoard({
@@ -12,14 +13,14 @@ export default function QuizBoard({
   score,
   handleAnswer,
   totalQuizzes,
+  onExit,
+  resetGame,
 }: QuizBoardProps) {
-  // 팝업 상태 관리: null이면 팝업 닫힘, 객체가 있으면 팝업 열림
   const [feedback, setFeedback] = useState<{
     isCorrect: boolean;
     text: string;
   } | null>(null);
 
-  // 선택지 클릭 시 즉시 넘어가지 않고 팝업을 먼저 띄움
   const onOptionClick = (isCorrect: boolean) => {
     setFeedback({
       isCorrect,
@@ -27,7 +28,6 @@ export default function QuizBoard({
     });
   };
 
-  // 팝업에서 '다음' 버튼을 눌렀을 때 비로소 로직(점수, 해수면 계산)을 처리하고 넘어감
   const onNextClick = () => {
     if (feedback) {
       handleAnswer(feedback.isCorrect);
@@ -35,6 +35,7 @@ export default function QuizBoard({
     }
   };
 
+  // 게임 오버 화면 (다시 도전 & 모드 선택 버튼 추가)
   if (isGameOver) {
     return (
       <div className="flex flex-col items-center justify-center w-full h-screen bg-red-950 text-white z-50 relative">
@@ -44,16 +45,25 @@ export default function QuizBoard({
         <p className="text-xl text-zinc-300">
           해수면이 100% 차올라 인류가 위기에 처했습니다.
         </p>
-        <button
-          onClick={() => window.location.reload()}
-          className="mt-8 px-6 py-3 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-colors font-bold"
-        >
-          다시 도전하기
-        </button>
+        <div className="flex gap-4 mt-8">
+          <button
+            onClick={resetGame}
+            className="px-6 py-3 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-colors font-bold"
+          >
+            다시 도전하기
+          </button>
+          <button
+            onClick={onExit}
+            className="px-6 py-3 bg-zinc-800 text-white hover:bg-zinc-700 transition-colors font-bold"
+          >
+            모드 선택으로
+          </button>
+        </div>
       </div>
     );
   }
 
+  // 게임 완료 화면 (다른 모드 즐기기 버튼 추가)
   if (isFinished) {
     return (
       <div className="flex flex-col items-center justify-center w-full h-screen bg-zinc-900 text-white z-50 relative">
@@ -66,14 +76,37 @@ export default function QuizBoard({
         <p className="text-lg text-zinc-400 mt-2">
           최종 해수면 상승: {waterLevel}%
         </p>
+        <button
+          onClick={onExit}
+          className="mt-10 px-10 py-4 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-500 transition-all shadow-lg hover:shadow-blue-500/50"
+        >
+          다른 모드 즐기기
+        </button>
       </div>
     );
   }
 
+  // 퀴즈 진행 화면
   return (
     <div className="relative w-full h-screen flex flex-col items-center justify-center px-6 z-10 text-white">
-      {/* 1. 상단 상태 바 */}
-      <div className="absolute top-12 w-full max-w-4xl flex justify-between items-end px-4">
+      {/* 상단 네비게이션 바 (Home / Exit) */}
+      <div className="absolute top-6 w-full max-w-6xl flex justify-between items-center px-4 z-20">
+        <Link
+          href="/"
+          className="text-zinc-500 hover:text-white transition-colors flex items-center gap-2 font-bold tracking-widest text-sm uppercase"
+        >
+          메인 페이지
+        </Link>
+        <button
+          onClick={onExit}
+          className="text-zinc-500 hover:text-white transition-colors font-bold tracking-widest text-sm uppercase"
+        >
+          모드 선택하기
+        </button>
+      </div>
+
+      {/* 상단 상태 바 */}
+      <div className="absolute top-20 w-full max-w-4xl flex justify-between items-end px-4">
         <div className="flex flex-col">
           <span className="text-zinc-500 text-sm font-bold tracking-widest uppercase mb-1">
             Question
@@ -91,18 +124,18 @@ export default function QuizBoard({
         </div>
       </div>
 
-      {/* 2. 중앙 질문 영역 */}
-      <div className="max-w-3xl text-center mb-16">
+      {/* 중앙 질문 영역 */}
+      <div className="max-w-3xl text-center mb-16 mt-10">
         <h2 className="text-2xl md:text-4xl font-bold leading-tight text-zinc-100 break-keep">
           {currentQuiz.question}
         </h2>
       </div>
 
-      {/* 3. 2지선다 버튼 영역 */}
+      {/* 2지선다 버튼 영역 */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
         <button
           onClick={() => onOptionClick(currentQuiz.options.A.isCorrect)}
-          disabled={feedback !== null} // 팝업이 떠있을 땐 클릭 방지
+          disabled={feedback !== null}
           className="group relative flex flex-col items-center justify-center p-10 md:p-12 bg-zinc-900 border border-zinc-800 rounded-2xl hover:bg-zinc-800 hover:border-zinc-500 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <span className="absolute top-6 left-6 text-2xl font-bold text-zinc-700 group-hover:text-zinc-400 transition-colors">
@@ -127,7 +160,7 @@ export default function QuizBoard({
         </button>
       </div>
 
-      {/* 4. 피드백 팝업 (오버레이) */}
+      {/* 피드백 팝업 (오버레이) */}
       {feedback && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
           <div

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import ScenarioQuizWrapper from "@/components/quiz/ScenarioQuizWrapper";
 import RandomQuizWrapper from "@/components/quiz/RandomQuizWrapper";
+import Link from "next/link";
 
 // 메인 모드 선택 페이지
 export default function QuizPage() {
@@ -11,22 +12,34 @@ export default function QuizPage() {
     "scenario" | "random" | null
   >(null);
 
-  // 모드가 선택되었다면, 해당 래퍼 컴포넌트를 렌더링 (Hook 조건부 호출 에러 완벽 방지)
-  if (selectedMode === "scenario") return <ScenarioQuizWrapper />;
-  if (selectedMode === "random") return <RandomQuizWrapper />;
+  const handleExitToMenu = () => setSelectedMode(null);
+
+  if (selectedMode === "scenario")
+    return <ScenarioQuizWrapper onExit={handleExitToMenu} />;
+
+  if (selectedMode === "random")
+    return <RandomQuizWrapper onExit={handleExitToMenu} />;
 
   // 모드 선택 화면 UI
   return (
     <main className="relative flex flex-col items-center justify-center min-h-screen px-6 bg-black text-white overflow-hidden">
       <div className="absolute inset-0 bg-linear-to-b from-black via-zinc-900 to-black opacity-50 pointer-events-none" />
 
+      <div className="absolute top-6 w-full max-w-6xl flex justify-between items-center px-4 z-20">
+        <Link
+          href="/"
+          className="text-zinc-500 hover:text-white transition-colors flex items-center gap-2 font-bold tracking-widest text-sm uppercase"
+        >
+          메인 페이지
+        </Link>
+      </div>
+
       <div className="relative z-10 flex flex-col items-center max-w-5xl w-full">
         <h1 className="text-4xl md:text-5xl font-black mb-4 tracking-tighter text-center">
           인류의 운명을 결정할 방식을 선택하십시오
         </h1>
         <p className="text-zinc-400 mb-16 text-center text-lg break-keep">
-          당신의 지식으로 시나리오를 돌파할 것인지, 본능적인 직관으로 맞설
-          것인지 결정해야 합니다.
+          비슷한 종류의 선택지와 무작위 선택지 중 선택하십시오
         </p>
 
         {/* 선택 카드 컨테이너 */}
@@ -38,10 +51,10 @@ export default function QuizPage() {
           >
             <div className="absolute inset-0 bg-blue-500/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
             <span className="relative text-blue-500 font-bold tracking-widest text-sm mb-4 uppercase">
-              Mode 01
+              Mode 1
             </span>
             <h2 className="relative text-3xl font-bold mb-4 group-hover:text-blue-400 transition-colors">
-              시나리오로 배우기
+              비슷한 선택지
             </h2>
             <p className="relative text-zinc-400 leading-relaxed break-keep group-hover:text-zinc-300 transition-colors">
               일상 속에서 마주하는 다양한 환경 문제 상황. 주어진 2가지 선택지
@@ -56,15 +69,14 @@ export default function QuizPage() {
           >
             <div className="absolute inset-0 bg-red-500/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
             <span className="relative text-red-500 font-bold tracking-widest text-sm mb-4 uppercase">
-              Mode 02
+              Mode 2
             </span>
             <h2 className="relative text-3xl font-bold mb-4 group-hover:text-red-400 transition-colors">
-              직관 테스트 대결
+              무작위 선택지
             </h2>
             <p className="relative text-zinc-400 leading-relaxed break-keep group-hover:text-zinc-300 transition-colors">
-              무작위로 맞붙는 두 가지 친환경 행동. 당신의 상식을 깨고,
-              데이터상으로 온실가스를 더 많이 감축하는 행동을 직관적으로
-              골라내십시오.
+              무작위로 맞붙는 두 가지 친환경 행동. 데이터상으로 온실가스를 더
+              많이 감축하는 행동을 골라내십시오.
             </p>
           </button>
         </div>

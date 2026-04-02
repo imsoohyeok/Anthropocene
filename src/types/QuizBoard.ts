@@ -9,4 +9,6 @@ export interface QuizBoardProps {
   score: number;
   handleAnswer: (isCorrect: boolean) => void;
   totalQuizzes: number;
+  onExit: () => void;
+  resetGame: () => void;
 }
