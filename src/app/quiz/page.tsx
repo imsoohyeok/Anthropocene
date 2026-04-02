@@ -3,10 +3,10 @@
 import QuizBoard from "@/components/quiz/QuizBoard";
 import RisingSea from "@/components/quiz/RisingSea";
 import { dummyQuizzes } from "@/data/QuizData";
-import { useQuizGame } from "@/hooks/useQuizGame";
+import { useScenarioQuiz } from "@/hooks/useScenarioQuiz";
 
 export default function Home() {
-  const quizGameState = useQuizGame(dummyQuizzes);
+  const quizGameState = useScenarioQuiz(dummyQuizzes);
 
   if (!quizGameState.isReady) {
     return <main className="min-h-screen bg-black" />;

@@ -1,34 +1,12 @@
-import { useState, useCallback, useMemo, useEffect } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { QuizItem } from "@/types/quiz";
 
-// 피셔-예이츠(Fisher-Yates) 셔플 알고리즘
-const shuffleArray = <T>(array: T[]): T[] => {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
-};
-
-export const useQuizGame = (initialQuizzes: QuizItem[]) => {
-  const [quizzes, setQuizzes] = useState(() => shuffleArray(initialQuizzes));
-
-  const [isReady, setIsReady] = useState(false);
+export const useQuizEngine = (quizzes: QuizItem[]) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [waterLevel, setWaterLevel] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setQuizzes(shuffleArray(initialQuizzes));
-      setIsReady(true);
-    }, 0);
-
-    return () => clearTimeout(timer);
-  }, [initialQuizzes]);
 
   const currentQuiz = useMemo(
     () => quizzes[currentIndex],
@@ -37,7 +15,7 @@ export const useQuizGame = (initialQuizzes: QuizItem[]) => {
 
   const handleAnswer = useCallback(
     (isCorrect: boolean) => {
-      if (isGameOver || isFinished) return;
+      if (isGameOver || isFinished || !currentQuiz) return;
 
       if (isCorrect) {
         setCorrectCount((prev) => prev + 1);
@@ -67,18 +45,15 @@ export const useQuizGame = (initialQuizzes: QuizItem[]) => {
     ],
   );
 
-  // 게임을 다시 시작할 때 호출하는 함수
-  const resetGame = useCallback(() => {
-    setQuizzes(shuffleArray(initialQuizzes));
+  const resetEngine = useCallback(() => {
     setCurrentIndex(0);
     setWaterLevel(0);
     setCorrectCount(0);
     setIsGameOver(false);
     setIsFinished(false);
-  }, [initialQuizzes]);
+  }, []);
 
   return {
-    isReady,
     currentQuiz,
     currentIndex,
     waterLevel,
@@ -86,8 +61,11 @@ export const useQuizGame = (initialQuizzes: QuizItem[]) => {
     isGameOver,
     isFinished,
     handleAnswer,
-    resetGame,
+    resetEngine,
     totalQuizzes: quizzes.length,
-    score: Math.round((correctCount / quizzes.length) * 100) || 0,
+    score:
+      quizzes.length > 0
+        ? Math.round((correctCount / quizzes.length) * 100)
+        : 0,
   };
 };
