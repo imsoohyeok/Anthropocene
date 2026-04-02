@@ -138,7 +138,7 @@ export default function QuizBoard({
             >
               {feedback.isCorrect ? "정답입니다!" : "오답입니다!"}
             </h3>
-            <p className="text-lg text-zinc-200 mb-8 break-keep leading-relaxed">
+            <p className="text-lg text-zinc-200 mb-8 break-keep leading-relaxed whitespace-pre-wrap text-left w-full">
               {feedback.text}
             </p>
             <button

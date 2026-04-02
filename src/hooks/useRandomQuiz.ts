@@ -23,7 +23,7 @@ const generateRandomQuizzes = (roundCount: number = 10): QuizItem[] => {
         A: { text: actionA.actionText, isCorrect: aIsWinner },
         B: { text: actionB.actionText, isCorrect: !aIsWinner },
       },
-      explanation: `정답: [${winner.actionText}]\n\n${winner.explanation}\n\n📊 감축 기여도 비교\n• ${winner.actionText} : ${winner.impactScore}점\n• ${loser.actionText} : ${loser.impactScore}점`,
+      explanation: `정답: ${winner.actionText}\n\n${winner.explanation}\n\n• ${winner.actionText}\n: ${winner.impactScore}점\n• ${loser.actionText}\n: ${loser.impactScore}점`,
       penalty: 25,
     });
   }
