@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { QuizBoardProps } from "@/types/QuizBoard";
+import { useQuizFeedback } from "@/hooks/useQuizFeedback";
+import GameOverScreen from "./GameOverScreen";
+import GameClearScreen from "./GameClearScreen";
 
 export default function QuizBoard({
   currentQuiz,
@@ -16,73 +18,20 @@ export default function QuizBoard({
   onExit,
   resetGame,
 }: QuizBoardProps) {
-  const [feedback, setFeedback] = useState<{
-    isCorrect: boolean;
-    text: string;
-  } | null>(null);
+  const { feedback, onOptionClick, onNextClick } = useQuizFeedback(
+    currentQuiz.explanation,
+    handleAnswer,
+  );
 
-  const onOptionClick = (isCorrect: boolean) => {
-    setFeedback({
-      isCorrect,
-      text: currentQuiz.explanation,
-    });
-  };
-
-  const onNextClick = () => {
-    if (feedback) {
-      handleAnswer(feedback.isCorrect);
-      setFeedback(null);
-    }
-  };
-
-  // 게임 오버 화면 (다시 도전 & 모드 선택 버튼 추가)
+  // 게임 오버 화면
   if (isGameOver) {
-    return (
-      <div className="flex flex-col items-center justify-center w-full h-screen bg-red-950 text-white z-50 relative">
-        <h1 className="text-7xl md:text-8xl font-black mb-4 text-red-500 tracking-tighter">
-          GAME OVER
-        </h1>
-        <p className="text-xl text-zinc-300">
-          해수면이 100% 차올라 인류가 위기에 처했습니다.
-        </p>
-        <div className="flex gap-4 mt-8">
-          <button
-            onClick={resetGame}
-            className="px-6 py-3 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-colors font-bold"
-          >
-            다시 도전하기
-          </button>
-          <button
-            onClick={onExit}
-            className="px-6 py-3 bg-zinc-800 text-white hover:bg-zinc-700 transition-colors font-bold"
-          >
-            모드 선택으로
-          </button>
-        </div>
-      </div>
-    );
+    return <GameOverScreen resetGame={resetGame} onExit={onExit} />;
   }
 
-  // 게임 완료 화면 (다른 모드 즐기기 버튼 추가)
+  // 게임 완료 화면
   if (isFinished) {
     return (
-      <div className="flex flex-col items-center justify-center w-full h-screen bg-zinc-900 text-white z-50 relative">
-        <h1 className="text-7xl md:text-8xl font-black mb-4 text-blue-500 tracking-tighter">
-          SURVIVED
-        </h1>
-        <p className="text-xl text-zinc-300">
-          정답률: <span className="font-bold text-blue-400">{score}%</span>
-        </p>
-        <p className="text-lg text-zinc-400 mt-2">
-          최종 해수면 상승: {waterLevel}%
-        </p>
-        <button
-          onClick={onExit}
-          className="mt-10 px-10 py-4 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-500 transition-all shadow-lg hover:shadow-blue-500/50"
-        >
-          다른 모드 즐기기
-        </button>
-      </div>
+      <GameClearScreen score={score} waterLevel={waterLevel} onExit={onExit} />
     );
   }
 
