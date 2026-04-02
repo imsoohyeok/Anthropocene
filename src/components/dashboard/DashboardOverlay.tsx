@@ -1,3 +1,4 @@
+import Link from "next/link";
 import MetricCard from "./MetricCard";
 import { DashboardOverlayProps } from "@/types/DashboardOverlay";
 
@@ -7,6 +8,8 @@ export default function DashboardOverlay({
   metrics,
   description,
 }: DashboardOverlayProps) {
+  const isEndGame = year >= 2090;
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-8 pt-20 pb-40">
       {/* 헤더 섹션 */}
@@ -44,6 +47,27 @@ export default function DashboardOverlay({
           unit="mm"
           trend={metrics.seaLevel > 50}
         />
+      </div>
+      {/* 페이지 전환 버튼 */}
+      <div
+        className={`mt-20 flex flex-col items-center justify-center w-full transition-all duration-1000 transform ${
+          isEndGame
+            ? "opacity-100 translate-y-0 pointer-events-auto"
+            : "opacity-0 translate-y-10 pointer-events-none"
+        }`}
+      >
+        <Link
+          href="/quiz"
+          className="relative inline-flex items-center justify-center group px-10 py-5 bg-red-600 text-white font-bold text-xl rounded-full overflow-hidden shadow-[0_0_30px_rgba(220,38,38,0.5)] hover:shadow-[0_0_50px_rgba(220,38,38,0.8)] hover:scale-105 transition-all duration-300"
+        >
+          {/* 버튼 호버 시 빛나는 효과 애니메이션 */}
+          <div className="absolute inset-0 w-full h-full bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />
+          <span className="relative tracking-widest">인류의 운명 결정하기</span>
+        </Link>
+
+        <p className="mt-6 text-zinc-400 text-sm tracking-widest animate-pulse text-center w-full">
+          미래를 바꿀 마지막 기회입니다.
+        </p>
       </div>
     </div>
   );
