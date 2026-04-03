@@ -17,10 +17,13 @@ export default function Home() {
   const { metrics, label, description, visuals } = useTimeline(year);
 
   return (
-    <main ref={containerRef} className="relative bg-black h-[500vh]">
-      <div className="fixed top-0 left-0 w-full h-screen overflow-hidden">
+    <main
+      ref={containerRef}
+      className="relative bg-black md:h-[500vh] min-h-screen"
+    >
+      <div className="md:fixed relative top-0 left-0 w-full h-screen overflow-hidden">
         {/* 비주얼 레이어 */}
-        <div className="absolute inset-0 z-0">
+        <div className="fixed inset-0 z-0">
           <MainScene hazardLevel={visuals.hazardLevel} co2={metrics.co2} />
           <div
             className="absolute inset-0 transition-colors duration-500 pointer-events-none"
@@ -31,7 +34,7 @@ export default function Home() {
         </div>
 
         {/* UI 레이어 */}
-        <div className="relative z-10 pointer-events-none h-full flex flex-col justify-center">
+        <div className="relative z-10 pointer-events-none h-full flex flex-col justify-center w-full max-w-4xl mx-auto px-4 md:px-0 py-32 md:py-0">
           <DashboardOverlay
             year={year}
             label={label}
@@ -41,8 +44,10 @@ export default function Home() {
         </div>
 
         {/* 컨트롤 레이어 */}
-        <div className="absolute bottom-0 w-full z-20">
-          <YearController year={year} setYear={setYear} />
+        <div className="absolute bottom-0 w-full z-20 pb-8">
+          <div className="w-full max-w-4xl mx-auto px-4 md:px-0">
+            <YearController year={year} setYear={setYear} />
+          </div>
         </div>
       </div>
     </main>

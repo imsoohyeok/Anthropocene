@@ -35,7 +35,7 @@ export default function QuizPage() {
       </div>
 
       <div className="relative z-10 flex flex-col items-center max-w-5xl w-full">
-        <h1 className="text-4xl md:text-5xl font-black mb-4 tracking-tighter text-center">
+        <h1 className="text-4xl md:text-4xl font-black mb-4 tracking-tighter text-center">
           인류의 운명을 결정할 방식을 선택하십시오
         </h1>
         <p className="text-zinc-400 mb-16 text-center text-lg break-keep">
@@ -43,7 +43,7 @@ export default function QuizPage() {
         </p>
 
         {/* 선택 카드 컨테이너 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 w-full max-w-4xl">
           {/* 시나리오 모드 */}
           <button
             onClick={() => setSelectedMode("scenario")}
