@@ -39,7 +39,7 @@ export default function QuizBoard({
   return (
     <div className="relative w-full h-screen flex flex-col items-center justify-center px-6 z-10 text-white">
       {/* 상단 네비게이션 바 (Home / Exit) */}
-      <div className="absolute top-6 w-full max-w-6xl flex justify-between items-center px-4 z-20">
+      <div className="absolute top-6 w-full max-w-4xl flex justify-between items-center px-4 z-20">
         <Link
           href="/"
           className="text-zinc-500 hover:text-white transition-colors flex items-center gap-2 font-bold tracking-widest text-sm uppercase"
@@ -75,13 +75,13 @@ export default function QuizBoard({
 
       {/* 중앙 질문 영역 */}
       <div className="max-w-3xl text-center mb-16 mt-10">
-        <h2 className="text-2xl md:text-4xl font-bold leading-tight text-zinc-100 break-keep">
+        <h2 className="text-2xl md:text-3xl font-bold leading-tight text-zinc-100 break-keep">
           {currentQuiz.question}
         </h2>
       </div>
 
       {/* 2지선다 버튼 영역 */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 w-full max-w-3xl">
         <button
           onClick={() => onOptionClick(currentQuiz.options.A.isCorrect)}
           disabled={feedback !== null}
