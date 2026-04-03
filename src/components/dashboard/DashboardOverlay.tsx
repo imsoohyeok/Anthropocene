@@ -13,8 +13,8 @@ export default function DashboardOverlay({
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-8 pt-20 pb-40">
       {/* 헤더 섹션 */}
-      <div className="text-center my-16 max-w-2xl">
-        <h1 className="text-9xl font-black tracking-tighter mb-4 tabular-nums text-white drop-shadow-2xl">
+      <div className="text-center mt-16 mb-10 max-w-3xl">
+        <h1 className="text-7xl mb:text-9xl font-black tracking-tighter mb-4 tabular-nums text-white drop-shadow-2xl">
           {year}
         </h1>
         <div className="inline-block px-4 py-1 border border-red-500/50 bg-red-500/10 rounded-full mb-6">
@@ -22,13 +22,13 @@ export default function DashboardOverlay({
             {label}
           </p>
         </div>
-        <p className="text-lg text-zinc-400 leading-relaxed font-light">
+        <p className="text-sm mb:text-lg text-zinc-400 leading-relaxed font-light">
           {description}
         </p>
       </div>
 
       {/* 메트릭 그리드 */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl pointer-events-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6 w-full max-w-6xl pointer-events-auto">
         <MetricCard
           label="이산화탄소 배출량"
           value={metrics.co2.toFixed(1)}
@@ -65,7 +65,7 @@ export default function DashboardOverlay({
           <span className="relative tracking-widest">인류의 운명 결정하기</span>
         </Link>
 
-        <p className="mt-6 text-zinc-400 text-sm tracking-widest animate-pulse text-center w-full">
+        <p className="mt-2 text-zinc-400 text-sm tracking-widest animate-pulse text-center w-full">
           미래를 바꿀 마지막 기회입니다.
         </p>
       </div>
