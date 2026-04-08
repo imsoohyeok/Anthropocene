@@ -116,11 +116,11 @@ export default function QuizBoard({
             className={`max-w-xl w-full p-8 rounded-2xl border ${feedback.isCorrect ? "bg-blue-950/50 border-blue-500" : "bg-red-950/50 border-red-500"} flex flex-col items-center text-center shadow-2xl transform transition-all`}
           >
             <h3
-              className={`text-4xl font-black mb-4 ${feedback.isCorrect ? "text-blue-400" : "text-red-500"}`}
+              className={`text-2xl md:text-4xl font-black mb-4 ${feedback.isCorrect ? "text-blue-400" : "text-red-500"}`}
             >
               {feedback.isCorrect ? "정답입니다!" : "오답입니다!"}
             </h3>
-            <p className="text-lg text-zinc-200 mb-8 break-keep leading-relaxed whitespace-pre-wrap text-left w-full">
+            <p className="text-sm md:text-lg text-zinc-200 mb-8 break-keep leading-relaxed whitespace-pre-wrap text-left w-full">
               {feedback.text}
             </p>
             <button
