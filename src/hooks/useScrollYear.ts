@@ -21,9 +21,12 @@ export const useScrollYear = (
         end: "bottom bottom",
         scrub: true,
         onUpdate: (self) => {
+          if (window.innerWidth < 768) return;
+
           const calculatedYear = Math.round(
             startYear + (endYear - startYear) * self.progress,
           );
+
           setYearState((prev) =>
             prev !== calculatedYear ? calculatedYear : prev,
           );
@@ -37,8 +40,12 @@ export const useScrollYear = (
   const setYear = useCallback(
     (newYear: number) => {
       setYearState(newYear);
+
+      if (window.innerWidth < 768) return;
+
       if (containerRef.current) {
         const progress = (newYear - startYear) / (endYear - startYear);
+
         const scrollHeight =
           containerRef.current.scrollHeight - window.innerHeight;
         window.scrollTo({ top: progress * scrollHeight, behavior: "auto" });

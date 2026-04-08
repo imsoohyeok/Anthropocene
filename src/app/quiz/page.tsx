@@ -35,19 +35,19 @@ export default function QuizPage() {
       </div>
 
       <div className="relative z-10 flex flex-col items-center max-w-5xl w-full">
-        <h1 className="text-4xl md:text-5xl font-black mb-4 tracking-tighter text-center">
+        <h1 className="text-xl md:text-4xl font-black mb-4 tracking-tighter text-center">
           인류의 운명을 결정할 방식을 선택하십시오
         </h1>
-        <p className="text-zinc-400 mb-16 text-center text-lg break-keep">
+        <p className="text-zinc-400 mb-8 md:mb-16 text-center text-sm md:text-lg break-keep">
           비슷한 종류의 선택지와 무작위 선택지 중 선택하십시오
         </p>
 
         {/* 선택 카드 컨테이너 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 w-full max-w-4xl">
           {/* 시나리오 모드 */}
           <button
             onClick={() => setSelectedMode("scenario")}
-            className="group relative flex flex-col items-start p-10 md:p-12 bg-zinc-900 border border-zinc-800 rounded-3xl hover:bg-zinc-800 hover:border-blue-500/50 transition-all duration-500 text-left overflow-hidden"
+            className="group relative flex flex-col items-start p-8 md:p-12 bg-zinc-900 border border-zinc-800 rounded-3xl hover:bg-zinc-800 hover:border-blue-500/50 transition-all duration-500 text-left overflow-hidden"
           >
             <div className="absolute inset-0 bg-blue-500/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
             <span className="relative text-blue-500 font-bold tracking-widest text-sm mb-4 uppercase">
@@ -65,7 +65,7 @@ export default function QuizPage() {
           {/* 무작위 대결 (직관 테스트) */}
           <button
             onClick={() => setSelectedMode("random")}
-            className="group relative flex flex-col items-start p-10 md:p-12 bg-zinc-900 border border-zinc-800 rounded-3xl hover:bg-zinc-800 hover:border-red-500/50 transition-all duration-500 text-left overflow-hidden"
+            className="group relative flex flex-col items-start p-8 md:p-12 bg-zinc-900 border border-zinc-800 rounded-3xl hover:bg-zinc-800 hover:border-red-500/50 transition-all duration-500 text-left overflow-hidden"
           >
             <div className="absolute inset-0 bg-red-500/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
             <span className="relative text-red-500 font-bold tracking-widest text-sm mb-4 uppercase">
