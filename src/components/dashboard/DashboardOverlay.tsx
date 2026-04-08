@@ -58,7 +58,7 @@ export default function DashboardOverlay({
       >
         <Link
           href="/quiz"
-          className="group relative overflow-hidden inline-block px-8 py-3 bg-red-600 text-white font-bold rounded-full hover:bg-red-500 transition-all shadow-lg hover:shadow-red-500/50 text-lg tracking-normal w-auto min-w-[200px] pointer-events-auto text-center"
+          className="group relative overflow-hidden inline-block px-8 py-3 bg-red-600 text-white font-bold rounded-full hover:bg-red-500 transition-all shadow-lg hover:shadow-red-500/50 text-lg tracking-normal w-auto min-w-50 pointer-events-auto text-center"
         >
           {/* 버튼 호버 시 빛나는 효과 애니메이션 */}
           <div className="absolute inset-0 w-full h-full bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />
