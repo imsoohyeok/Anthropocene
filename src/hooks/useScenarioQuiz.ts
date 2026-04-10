@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from "react";
+import { useEffect } from "react";
+import { useGameStore } from "@/store/useGameStore";
 import { QuizItem } from "@/types/quiz";
-import { useQuizEngine } from "./useQuizEngine";
 
 const shuffleArray = <T>(array: T[]): T[] => {
   const shuffled = [...array];
@@ -12,27 +12,19 @@ const shuffleArray = <T>(array: T[]): T[] => {
 };
 
 export const useScenarioQuiz = (initialQuizzes: QuizItem[]) => {
-  const [quizzes, setQuizzes] = useState<QuizItem[]>([]);
-  const [isReady, setIsReady] = useState(false);
+  // 스토어에서 함수와 상태를 가져옵니다.
+  const startGame = useGameStore((state) => state.startGame);
+  const quizzes = useGameStore((state) => state.quizzes);
+  const waterLevel = useGameStore((state) => state.waterLevel);
 
-  const engine = useQuizEngine(quizzes);
-
+  // 훅이 실행될 때, 넘겨받은 원본 데이터를 섞어서 스토어에 세팅합니다.
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setQuizzes(shuffleArray(initialQuizzes));
-      setIsReady(true);
-    }, 0);
-    return () => clearTimeout(timer);
-  }, [initialQuizzes]);
-
-  const resetGame = useCallback(() => {
-    setQuizzes(shuffleArray(initialQuizzes));
-    engine.resetEngine();
-  }, [initialQuizzes, engine]);
+    const shuffledQuizzes = shuffleArray(initialQuizzes);
+    startGame(shuffledQuizzes, "scenario");
+  }, [startGame, initialQuizzes]);
 
   return {
-    ...engine,
-    isReady,
-    resetGame,
+    isReady: quizzes.length > 0,
+    waterLevel,
   };
 };

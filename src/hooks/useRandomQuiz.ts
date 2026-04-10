@@ -1,9 +1,8 @@
-import { useState, useEffect, useCallback } from "react";
+import { useEffect } from "react";
+import { useGameStore } from "@/store/useGameStore";
 import { QuizItem } from "@/types/quiz";
 import { actionPool } from "@/data/actionData";
-import { useQuizEngine } from "./useQuizEngine"; // 💡 공통 게임 엔진 불러오기
 
-// 거대한 데이터 풀에서 무작위로 2개를 뽑아 퀴즈 형태로 가공하는 함수
 const generateRandomQuizzes = (roundCount: number = 10): QuizItem[] => {
   const generatedQuizzes: QuizItem[] = [];
 
@@ -32,27 +31,20 @@ const generateRandomQuizzes = (roundCount: number = 10): QuizItem[] => {
 };
 
 export const useRandomQuiz = (totalRounds: number = 10) => {
-  const [quizzes, setQuizzes] = useState<QuizItem[]>([]);
-  const [isReady, setIsReady] = useState(false);
+  // 스토어에서 함수와 상태를 가져옵니다.
+  const startGame = useGameStore((state) => state.startGame);
+  const quizzes = useGameStore((state) => state.quizzes);
+  const waterLevel = useGameStore((state) => state.waterLevel);
 
-  const engine = useQuizEngine(quizzes);
-
+  // 훅이 실행될 때 한 번만 퀴즈를 생성하고 스토어에 세팅합니다.
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setQuizzes(generateRandomQuizzes(totalRounds));
-      setIsReady(true);
-    }, 0);
-    return () => clearTimeout(timer);
-  }, [totalRounds]);
+    const newDynamicQuizzes = generateRandomQuizzes(totalRounds);
+    startGame(newDynamicQuizzes, "random");
+  }, [startGame, totalRounds]);
 
-  const resetGame = useCallback(() => {
-    setQuizzes(generateRandomQuizzes(totalRounds));
-    engine.resetEngine();
-  }, [totalRounds, engine]);
-
+  // Wrapper 컴포넌트가 화면을 그릴 때 필요한 정보만 딱 추려서 반환합니다.
   return {
-    ...engine,
-    isReady,
-    resetGame,
+    isReady: quizzes.length > 0,
+    waterLevel,
   };
 };

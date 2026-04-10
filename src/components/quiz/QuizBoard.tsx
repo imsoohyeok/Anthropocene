@@ -1,37 +1,46 @@
 "use client";
 
 import Link from "next/link";
-import { QuizBoardProps } from "@/types/QuizBoard";
 import { useQuizFeedback } from "@/hooks/useQuizFeedback";
 import GameOverScreen from "./GameOverScreen";
 import GameClearScreen from "./GameClearScreen";
+import { useGameStore } from "@/store/useGameStore";
 
-export default function QuizBoard({
-  currentQuiz,
-  currentIndex,
-  waterLevel,
-  isGameOver,
-  isFinished,
-  score,
-  handleAnswer,
-  totalQuizzes,
-  onExit,
-  resetGame,
-}: QuizBoardProps) {
+export default function QuizBoard() {
+  const {
+    quizzes,
+    currentIndex,
+    waterLevel,
+    score,
+    isGameOver,
+    isFinished,
+    submitAnswer,
+    resetGame,
+    exitToMenu,
+  } = useGameStore();
+
+  const currentQuiz = quizzes?.[currentIndex];
+
   const { feedback, onOptionClick, onNextClick } = useQuizFeedback(
-    currentQuiz.explanation,
-    handleAnswer,
+    currentQuiz?.explanation || "",
+    submitAnswer,
   );
+
+  if (!quizzes || quizzes.length === 0 || !currentQuiz) return null;
 
   // 게임 오버 화면
   if (isGameOver) {
-    return <GameOverScreen resetGame={resetGame} onExit={onExit} />;
+    return <GameOverScreen resetGame={resetGame} onExit={exitToMenu} />;
   }
 
   // 게임 완료 화면
   if (isFinished) {
     return (
-      <GameClearScreen score={score} waterLevel={waterLevel} onExit={onExit} />
+      <GameClearScreen
+        score={score}
+        waterLevel={waterLevel}
+        onExit={exitToMenu}
+      />
     );
   }
 
@@ -47,7 +56,7 @@ export default function QuizBoard({
           메인 페이지
         </Link>
         <button
-          onClick={onExit}
+          onClick={exitToMenu}
           className="text-zinc-500 hover:text-white transition-colors font-bold tracking-widest text-sm uppercase"
         >
           모드 선택하기
@@ -62,7 +71,7 @@ export default function QuizBoard({
           </span>
           <span className="text-3xl font-bold text-zinc-100">
             {currentIndex + 1}{" "}
-            <span className="text-zinc-600 text-xl">/ {totalQuizzes}</span>
+            <span className="text-zinc-600 text-xl">/ {quizzes.length}</span>
           </span>
         </div>
         <div className="flex flex-col items-end">
