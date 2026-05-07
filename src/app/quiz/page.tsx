@@ -1,24 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
 import ScenarioQuizWrapper from "@/components/quiz/ScenarioQuizWrapper";
 import RandomQuizWrapper from "@/components/quiz/RandomQuizWrapper";
-import Link from "next/link";
+import { useGameStore } from "@/store/useGameStore";
 
 // 메인 모드 선택 페이지
 export default function QuizPage() {
   // 모드 상태: null이면 선택 화면, 값이 있으면 해당 게임 화면 렌더링
-  const [selectedMode, setSelectedMode] = useState<
-    "scenario" | "random" | null
-  >(null);
+  const mode = useGameStore((state) => state.mode);
+  const changeMode = useGameStore((state) => state.changeMode);
 
-  const handleExitToMenu = () => setSelectedMode(null);
-
-  if (selectedMode === "scenario")
-    return <ScenarioQuizWrapper onExit={handleExitToMenu} />;
-
-  if (selectedMode === "random")
-    return <RandomQuizWrapper onExit={handleExitToMenu} />;
+  if (mode === "scenario") return <ScenarioQuizWrapper />;
+  if (mode === "random") return <RandomQuizWrapper />;
 
   // 모드 선택 화면 UI
   return (
@@ -46,7 +40,7 @@ export default function QuizPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 w-full max-w-4xl">
           {/* 시나리오 모드 */}
           <button
-            onClick={() => setSelectedMode("scenario")}
+            onClick={() => changeMode("scenario")}
             className="group relative flex flex-col items-start p-8 md:p-12 bg-zinc-900 border border-zinc-800 rounded-3xl hover:bg-zinc-800 hover:border-blue-500/50 transition-all duration-500 text-left overflow-hidden"
           >
             <div className="absolute inset-0 bg-blue-500/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
@@ -64,7 +58,7 @@ export default function QuizPage() {
 
           {/* 무작위 대결 (직관 테스트) */}
           <button
-            onClick={() => setSelectedMode("random")}
+            onClick={() => changeMode("random")}
             className="group relative flex flex-col items-start p-8 md:p-12 bg-zinc-900 border border-zinc-800 rounded-3xl hover:bg-zinc-800 hover:border-red-500/50 transition-all duration-500 text-left overflow-hidden"
           >
             <div className="absolute inset-0 bg-red-500/5 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
