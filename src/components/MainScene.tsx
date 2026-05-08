@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { MainSceneProps } from "@/types/MainScene";
 import { Canvas } from "@react-three/fiber";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
-import DustParticles from "./dashboard/DustParticles";
+import EarthModel from "./animation/EarthModel";
 
 export default function MainScene({ hazardLevel, co2 }: MainSceneProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -31,36 +31,36 @@ export default function MainScene({ hazardLevel, co2 }: MainSceneProps) {
       ref={containerRef}
       className="absolute inset-0 w-full h-full bg-zinc-950 flex items-center justify-center overflow-hidden"
     >
-      {/* 백그라운드 타이포그래피 (시각적 효과용) */}
-      <div
-        ref={textRef}
-        className="text-zinc-700 text-[10rem] md:text-[15rem] font-black tracking-tighter whitespace-nowrap select-none"
-        style={{ opacity: 0.1 }} // 초기 상태
-      >
-        ANTHROPOCENE
-      </div>
-
       {/* THREE.JS CANVAS 레이어 */}
-      <div className="absolute inset-0 z-10">
+      <div className="absolute inset-0 z-10 pointer-events-none">
         <Canvas
-          camera={{ position: [0, 0, 5], fov: 75 }}
-          dpr={[1, 2]} // 고해상도 지원
+          camera={{ position: [0, 0, 7], fov: 60 }} // 카메라 위치 조정
+          shadows // 그림자
+          dpr={[1, 2]}
         >
-          {/* 어두운 우주 공간 분위기를 위한 안개(Fog) */}
-          <fog attach="fog" args={["#0a0a0a", 2, 10]} />
+          <fog attach="fog" args={["#0a0a0a", 5, 15]} />
 
-          <ambientLight intensity={0.2} />
+          {/* 조명 세팅 */}
+          <ambientLight intensity={0.1} />
+          <directionalLight
+            position={[5, 5, 5]}
+            intensity={1.5}
+            castShadow
+            shadow-mapSize-width={1024}
+            shadow-mapSize-height={1024}
+          />
 
-          {/* 우주 먼지 컴포넌트에 데이터 전달 */}
-          <DustParticles hazardLevel={hazardLevel} co2={co2} />
+          <Suspense fallback={null}>
+            <EarthModel hazardLevel={hazardLevel} />
+          </Suspense>
 
-          {/* 빛 효과(Bloom)를 추가하여 먼지들이 반짝이게 만듭니다. */}
+          {/* 빛 효과 */}
           <EffectComposer>
             <Bloom
-              luminanceThreshold={0.2}
+              luminanceThreshold={0.1}
               luminanceSmoothing={0.9}
               height={300}
-              intensity={0.5}
+              intensity={0.2 + hazardLevel * 1.5}
             />
           </EffectComposer>
         </Canvas>

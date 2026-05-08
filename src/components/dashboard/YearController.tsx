@@ -1,3 +1,5 @@
+"use client";
+
 import { YearControllerProps } from "@/types/YearController";
 
 export default function YearController({ year, setYear }: YearControllerProps) {
@@ -5,7 +7,7 @@ export default function YearController({ year, setYear }: YearControllerProps) {
   const presentPosition = ((presentYear - 1850) / (2100 - 1850)) * 100;
 
   return (
-    <div className="fixed bottom-0 left-0 w-full p-12 bg-linear-to-t from-black/80 to-transparent">
+    <div className="fixed bottom-0 left-0 w-full p-12 bg-linear-to-t from-black/80 to-transparent pointer-events-auto">
       <div className="max-w-xl mx-auto px-4">
         <div className="relative group">
           <div
@@ -19,7 +21,6 @@ export default function YearController({ year, setYear }: YearControllerProps) {
             type="range"
             min="1850"
             max="2100"
-            aria-label="Select timeline year"
             step="1"
             value={year}
             onChange={(e) => setYear(Number(e.target.value))}
