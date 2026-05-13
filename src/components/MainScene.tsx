@@ -7,10 +7,13 @@ import { Canvas } from "@react-three/fiber";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import EarthModel from "./animation/EarthModel";
 import DustParticle from "./animation/DustParticle";
+import CameraHandler from "./animation/CameraHandler";
+import { useIntroStore } from "@/store/useIntroStore";
 
 export default function MainScene({ hazardLevel, co2 }: MainSceneProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
+  const stage = useIntroStore((state) => state.stage);
 
   useEffect(() => {
     gsap.to(textRef.current, {
@@ -39,6 +42,8 @@ export default function MainScene({ hazardLevel, co2 }: MainSceneProps) {
           shadows // 그림자
           dpr={[1, 2]}
         >
+          <CameraHandler />
+
           <fog attach="fog" args={["#0a0a0a", 5, 15]} />
 
           {/* 조명 세팅 */}
@@ -52,7 +57,7 @@ export default function MainScene({ hazardLevel, co2 }: MainSceneProps) {
           />
 
           <Suspense fallback={null}>
-            <EarthModel hazardLevel={hazardLevel} />
+            <EarthModel hazardLevel={stage !== "finished" ? 0 : hazardLevel} />
             <DustParticle count={2000} />
           </Suspense>
 
@@ -60,8 +65,6 @@ export default function MainScene({ hazardLevel, co2 }: MainSceneProps) {
           <EffectComposer>
             <Bloom
               luminanceThreshold={0.1}
-              luminanceSmoothing={0.9}
-              height={300}
               intensity={0.2 + hazardLevel * 1.5}
             />
           </EffectComposer>
