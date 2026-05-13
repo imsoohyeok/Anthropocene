@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "인류세",
   description: "인류세의 영향으로 인한 앞으로의 미래",
+  other: {
+    google: "notranslate",
+  },
 };
 
 export default function RootLayout({
@@ -24,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="ko"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>

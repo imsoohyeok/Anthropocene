@@ -40,7 +40,7 @@ export default function MainScene({ hazardLevel, co2 }: MainSceneProps) {
         <Canvas
           camera={{ position: [0, 0, 7], fov: 60 }} // 카메라 위치 조정
           shadows // 그림자
-          dpr={[1, 2]}
+          dpr={[1, 1.5]}
         >
           <CameraHandler />
 
