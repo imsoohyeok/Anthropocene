@@ -12,7 +12,7 @@ export default function IntroOverlay() {
     if (stage === "idle") {
       const autoTimer = setTimeout(() => {
         setStage("zooming");
-      }, 3000);
+      }, 2000);
 
       return () => clearTimeout(autoTimer); // 클린업
     }
@@ -38,7 +38,7 @@ export default function IntroOverlay() {
       ref={overlayRef}
       className="fixed inset-0 z-100 bg-black pointer-events-none"
       style={{
-        backgroundImage: "url('/sample.jpg')",
+        backgroundImage: "url('/IntroImage.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}

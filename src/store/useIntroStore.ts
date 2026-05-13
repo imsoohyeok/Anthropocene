@@ -1,9 +1,5 @@
 import { create } from "zustand";
-
-interface IntroState {
-  stage: "idle" | "zooming" | "finished";
-  setStage: (stage: "idle" | "zooming" | "finished") => void;
-}
+import { IntroState } from "@/types/IntroState";
 
 export const useIntroStore = create<IntroState>((set) => ({
   stage: "idle",
