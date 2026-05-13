@@ -6,6 +6,7 @@ import { MainSceneProps } from "@/types/MainScene";
 import { Canvas } from "@react-three/fiber";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
 import EarthModel from "./animation/EarthModel";
+import DustParticle from "./animation/DustParticle";
 
 export default function MainScene({ hazardLevel, co2 }: MainSceneProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -52,6 +53,7 @@ export default function MainScene({ hazardLevel, co2 }: MainSceneProps) {
 
           <Suspense fallback={null}>
             <EarthModel hazardLevel={hazardLevel} />
+            <DustParticle count={2000} />
           </Suspense>
 
           {/* 빛 효과 */}
