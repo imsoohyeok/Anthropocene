@@ -1,8 +1,6 @@
-import { useState, useEffect, useCallback, RefObject } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+"use client";
 
-gsap.registerPlugin(ScrollTrigger);
+import { useState, useEffect, useCallback, RefObject } from "react";
 
 export const useScrollYear = (
   containerRef: RefObject<HTMLElement | null>,
@@ -12,29 +10,33 @@ export const useScrollYear = (
   const [year, setYearState] = useState(startYear);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    const handleScroll = () => {
+      if (window.innerWidth < 768) return;
+      if (!containerRef.current) return;
 
-    const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: true,
-        onUpdate: (self) => {
-          if (window.innerWidth < 768) return;
+      const scrollY = window.scrollY;
+      const maxScroll = containerRef.current.scrollHeight - window.innerHeight;
 
-          const calculatedYear = Math.round(
-            startYear + (endYear - startYear) * self.progress,
-          );
+      if (maxScroll <= 0) return;
 
-          setYearState((prev) =>
-            prev !== calculatedYear ? calculatedYear : prev,
-          );
-        },
-      });
-    }, containerRef);
+      const progress = Math.min(Math.max(scrollY / maxScroll, 0), 1);
 
-    return () => ctx.revert();
+      const calculatedYear = Math.round(
+        startYear + (endYear - startYear) * progress,
+      );
+      setYearState((prev) => (prev !== calculatedYear ? calculatedYear : prev));
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
+
+    // 초기 실행
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
   }, [startYear, endYear, containerRef]);
 
   const setYear = useCallback(
@@ -45,10 +47,10 @@ export const useScrollYear = (
 
       if (containerRef.current) {
         const progress = (newYear - startYear) / (endYear - startYear);
-
-        const scrollHeight =
+        const maxScroll =
           containerRef.current.scrollHeight - window.innerHeight;
-        window.scrollTo({ top: progress * scrollHeight, behavior: "auto" });
+
+        window.scrollTo({ top: progress * maxScroll, behavior: "auto" });
       }
     },
     [startYear, endYear, containerRef],
