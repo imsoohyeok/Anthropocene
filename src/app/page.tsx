@@ -5,8 +5,8 @@ import { useTimeline } from "@/hooks/useTimeLine";
 import { useScrollYear } from "@/hooks/useScrollYear";
 import { timelineData } from "@/data/timeline";
 import MainScene from "@/components/MainScene";
-import DashboardOverlay from "@/components/dashboard/DashboardOverlay";
-import YearController from "@/components/dashboard/YearController";
+import DashboardOverlay from "@/components/main/DashboardOverlay";
+import YearController from "@/components/main/YearController";
 import IntroOverlay from "@/components/animation/IntroOverlay";
 import { useIntroStore } from "@/store/useIntroStore";
 
