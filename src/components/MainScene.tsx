@@ -39,8 +39,12 @@ export default function MainScene({ hazardLevel, co2 }: MainSceneProps) {
       <div className="absolute inset-0 z-10 pointer-events-none">
         <Canvas
           camera={{ position: [0, 0, 7], fov: 60 }} // 카메라 위치 조정
-          shadows // 그림자
-          dpr={[1, 1.5]}
+          dpr={[1, 1.2]}
+          shadows={false}
+          gl={{
+            antialias: false,
+            powerPreference: "high-performance",
+          }}
         >
           <CameraHandler />
 
@@ -51,7 +55,7 @@ export default function MainScene({ hazardLevel, co2 }: MainSceneProps) {
           <directionalLight
             position={[5, 5, 5]}
             intensity={1.5}
-            castShadow
+            // castShadow
             shadow-mapSize-width={1024}
             shadow-mapSize-height={1024}
           />
@@ -65,6 +69,7 @@ export default function MainScene({ hazardLevel, co2 }: MainSceneProps) {
           <EffectComposer>
             <Bloom
               luminanceThreshold={0.1}
+              mipmapBlur
               intensity={0.2 + hazardLevel * 1.5}
             />
           </EffectComposer>
