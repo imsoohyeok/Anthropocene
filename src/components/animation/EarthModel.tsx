@@ -14,9 +14,9 @@ export default function EarthModel({
   const cloudRef = useRef<Mesh>(null!);
 
   const [colorMap, normalMap, cloudsMap] = useTexture([
-    "/textures/earth_color.jpg",
-    "/textures/earth_normal.jpg",
-    "/textures/earth_clouds.png",
+    "/textures/earth_color.webp",
+    "/textures/earth_normal.webp",
+    "/textures/earth_clouds.webp",
   ]);
 
   useFrame((state, delta) => {
