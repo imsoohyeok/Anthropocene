@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useIntroStore } from "@/store/useIntroStore";
+import Image from "next/image";
 import gsap from "gsap";
+import { useIntroStore } from "@/store/useIntroStore";
 
 export default function IntroOverlay() {
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -37,11 +38,15 @@ export default function IntroOverlay() {
     <div
       ref={overlayRef}
       className="fixed inset-0 z-100 bg-black pointer-events-none"
-      style={{
-        backgroundImage: "url('/IntroImage.jpg')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    />
+    >
+      <Image
+        src="/IntroImage.webp"
+        alt="Daily life for environment"
+        fill
+        priority
+        className="object-cover"
+        quality={75}
+      />
+    </div>
   );
 }

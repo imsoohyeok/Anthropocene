@@ -1,44 +1,51 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
-import { Mesh, Color } from "three";
+import * as THREE from "three";
 import { useTexture } from "@react-three/drei";
+
+const BLACK = new THREE.Color("#000000");
+const DANGER_RED = new THREE.Color("#ff4d00");
 
 export default function EarthModel({
   hazardLevel = 0,
 }: {
   hazardLevel?: number;
 }) {
-  const earthRef = useRef<Mesh>(null!);
-  const cloudRef = useRef<Mesh>(null!);
+  const earthRef = useRef<THREE.Mesh>(null!);
+  const cloudRef = useRef<THREE.Mesh>(null!);
 
   const [colorMap, normalMap, cloudsMap] = useTexture([
-    "/textures/earth_color.jpg",
-    "/textures/earth_normal.jpg",
-    "/textures/earth_clouds.png",
+    "/textures/earth_color.webp",
+    "/textures/earth_normal.webp",
+    "/textures/earth_clouds.webp",
   ]);
+
+  const emissiveColor = useMemo(() => {
+    return BLACK.clone().lerp(
+      DANGER_RED,
+      hazardLevel > 0.5 ? (hazardLevel - 0.5) * 2 : 0,
+    );
+  }, [hazardLevel]);
 
   useFrame((state, delta) => {
     // 지면 자전
-    earthRef.current.rotation.y += delta * 0.08;
+    if (earthRef.current) {
+      earthRef.current.rotation.y += delta * 0.08;
+    }
 
-    // 구름 자전 (지면보다 약간 더 빠르게 설정하여 입체감 부여)
+    // 구름 자전
     if (cloudRef.current) {
       cloudRef.current.rotation.y += delta * 0.11;
     }
   });
 
-  const emissiveColor = new Color("#000000").lerp(
-    new Color("#ff4d00"),
-    hazardLevel > 0.5 ? (hazardLevel - 0.5) * 2 : 0,
-  );
-
   return (
     <group>
       {/* 지구 본체 */}
-      <mesh ref={earthRef} receiveShadow castShadow>
-        <sphereGeometry args={[2, 64, 64]} />
+      <mesh ref={earthRef}>
+        <sphereGeometry args={[2, 32, 32]} />
         <meshStandardMaterial
           map={colorMap}
           normalMap={normalMap}
@@ -49,9 +56,9 @@ export default function EarthModel({
         />
       </mesh>
 
-      {/* 구름 (지구보다 아주 살짝만 크게 설정) */}
+      {/* 구름 */}
       <mesh ref={cloudRef} scale={1.015}>
-        <sphereGeometry args={[2, 64, 64]} />
+        <sphereGeometry args={[2, 32, 32]} />
         <meshStandardMaterial
           map={cloudsMap}
           transparent={true}
