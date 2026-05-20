@@ -12,6 +12,7 @@ export const dummyQuizzes: QuizItem[] = [
     explanation:
       "소고기 1kg을 생산할 때 발생하는 탄소는 자동차로 약 100km를 달릴 때 배출되는 양과 맞먹습니다. 식단 변화는 가장 강력한 기후 행동입니다.",
     penalty: 25,
+    theme: "kitchen",
   },
   {
     id: 2,
@@ -27,6 +28,7 @@ export const dummyQuizzes: QuizItem[] = [
     explanation:
       "스트리밍은 전 세계 인터넷 트래픽의 60% 이상을 차지합니다. 화질을 한 단계만 낮춰도 데이터 센터의 막대한 에너지 소비를 줄일 수 있습니다.",
     penalty: 20,
+    theme: "kitchen",
   },
   {
     id: 3,
@@ -41,6 +43,7 @@ export const dummyQuizzes: QuizItem[] = [
     explanation:
       "세탁기가 소비하는 에너지의 약 90%는 물을 데우는 데 사용됩니다. 냉수 세탁만으로도 엄청난 전력 소비를 막을 수 있습니다.",
     penalty: 15,
+    theme: "kitchen",
   },
   {
     id: 4,
@@ -56,6 +59,7 @@ export const dummyQuizzes: QuizItem[] = [
     explanation:
       "새로운 제품을 생산하는 과정 자체가 막대한 자원과 에너지를 소모합니다. '사지 않고 오래 쓰는 것'이 최고의 친환경입니다.",
     penalty: 25,
+    theme: "kitchen",
   },
   {
     id: 5,
@@ -68,6 +72,7 @@ export const dummyQuizzes: QuizItem[] = [
     explanation:
       "전기차가 주행 중 배출가스는 없지만, 생산 과정의 탄소와 전력 생산 방식을 고려하면 여러 명이 타는 대중교통의 1인당 효율이 훨씬 좋습니다.",
     penalty: 20,
+    theme: "kitchen",
   },
   {
     id: 6,
@@ -79,6 +84,7 @@ export const dummyQuizzes: QuizItem[] = [
     explanation:
       "실내 난방 온도를 1도만 낮춰도 난방 에너지의 약 7%를 절약할 수 있으며, 내복은 체감 온도를 3도 이상 높여줍니다.",
     penalty: 15,
+    theme: "kitchen",
   },
   {
     id: 7,
@@ -91,6 +97,7 @@ export const dummyQuizzes: QuizItem[] = [
     explanation:
       "음식물 쓰레기가 매립/소각되며 발생하는 메탄가스는 이산화탄소보다 온실효과가 20배 이상 강력합니다. 원천 감량이 훨씬 중요합니다.",
     penalty: 25,
+    theme: "kitchen",
   },
   {
     id: 8,
@@ -108,6 +115,7 @@ export const dummyQuizzes: QuizItem[] = [
     explanation:
       "텀블러 생산에는 종이컵보다 훨씬 많은 자원이 들어갑니다. 하나의 텀블러를 수십, 수백 번 재사용해야 비로소 환경적 이익이 발생합니다.",
     penalty: 20,
+    theme: "kitchen",
   },
   {
     id: 9,
@@ -122,6 +130,7 @@ export const dummyQuizzes: QuizItem[] = [
     explanation:
       "인버터 에어컨의 경우, 목표 온도에 도달할 때 가장 많은 전력을 씁니다. 적정 온도로 계속 켜두는 것이 껐다 켜는 것보다 전력 소모가 적습니다.",
     penalty: 15,
+    theme: "kitchen",
   },
   {
     id: 10,
@@ -140,5 +149,6 @@ export const dummyQuizzes: QuizItem[] = [
     explanation:
       "자본의 흐름을 바꾸는 것은 시스템 전체를 변화시킵니다. 금융 자산이 화석연료 개발에 쓰이지 않도록 막는 것이 막대한 탄소 감축 효과를 낳습니다.",
     penalty: 25,
+    theme: "kitchen",
   },
 ];
