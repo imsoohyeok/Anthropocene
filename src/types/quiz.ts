@@ -12,7 +12,7 @@ export type QuizItem = {
   };
   explanation: string;
   penalty: number; // 틀렸을 때 올라갈 해수면 수치 (예: 20)
-  theme: "kitchen" | "living" | "utility" | "entrance" | "restroom";
+  theme: "kitchen" | "living" | "utility" | "entrance" | "restroom" | "city";
 };
 
 // 테마 타입
