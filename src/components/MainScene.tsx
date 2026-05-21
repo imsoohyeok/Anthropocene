@@ -61,7 +61,11 @@ export default function MainScene({ hazardLevel, co2 }: MainSceneProps) {
           />
 
           <Suspense fallback={null}>
-            <EarthModel hazardLevel={stage !== "finished" ? 0 : hazardLevel} />
+            <EarthModel
+              hazardLevel={
+                stage === "idle" || stage === "zooming" ? 0 : hazardLevel
+              }
+            />
             <DustParticle count={2000} />
           </Suspense>
 

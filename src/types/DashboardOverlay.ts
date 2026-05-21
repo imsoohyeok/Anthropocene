@@ -7,4 +7,5 @@ export interface DashboardOverlayProps {
     seaLevel: number;
   };
   description: string;
+  onEnterQuiz?: () => void;
 }
