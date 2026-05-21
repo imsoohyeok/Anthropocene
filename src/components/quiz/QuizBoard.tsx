@@ -1,13 +1,21 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useQuizFeedback } from "@/hooks/useQuizFeedback";
 import GameOverScreen from "./GameOverScreen";
 import GameClearScreen from "./GameClearScreen";
+import { useIntroStore } from "@/store/useIntroStore";
 import { useGameStore } from "@/store/useGameStore";
 import { AnimatePresence, motion } from "framer-motion";
 import QuizRoom from "./QuizRoom";
+import { useState } from "react";
 
 export default function QuizBoard() {
+  const router = useRouter();
+
+  const setStage = useIntroStore((state) => state.setStage);
+  const [isReturning, setIsReturning] = useState(false);
+
   const {
     quizzes,
     currentIndex,
@@ -21,10 +29,21 @@ export default function QuizBoard() {
   } = useGameStore();
 
   const currentQuiz = quizzes?.[currentIndex];
+
   const { feedback, onOptionClick, onNextClick } = useQuizFeedback(
     currentQuiz?.explanation || "",
     submitAnswer,
   );
+
+  const handleReturnToMain = () => {
+    setIsReturning(true);
+    setStage("return_warp");
+
+    setTimeout(() => {
+      exitToMenu();
+      router.push("/");
+    }, 1200);
+  };
 
   if (!quizzes || !currentQuiz) return null;
   if (isGameOver)
@@ -40,19 +59,37 @@ export default function QuizBoard() {
 
   return (
     <main className="relative w-full h-screen bg-black">
+      <AnimatePresence>
+        {isReturning && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+            className="absolute inset-0 z-999 bg-white pointer-events-none"
+          />
+        )}
+      </AnimatePresence>
+
       {/* HUD: 상단 정보 레이어 */}
       <div className="absolute top-0 left-0 w-full z-50 p-8 pointer-events-none">
         <div className="max-w-7xl mx-auto flex justify-between items-start pointer-events-auto">
           <div className="space-y-1">
-            <div className="mb-4">
+            {/* 네비게이션 버튼 그룹 */}
+            <div className="mb-4 flex items-center gap-6">
+              <button
+                onClick={handleReturnToMain}
+                className="text-zinc-500 hover:text-black transition-colors text-sm font-black tracking-[0.2em] uppercase flex items-center"
+              >
+                메인 페이지
+              </button>
               <button
                 onClick={exitToMenu}
-                className="text-zinc-500 hover:text-white transition-colors text-[16px] font-black tracking-[0.4em] uppercase"
+                className="text-zinc-500 hover:text-black transition-colors text-sm font-black tracking-[0.2em] uppercase"
               >
                 모드 선택
               </button>
             </div>
-            <div className="text-3xl font-black text-white tracking-tighter">
+            <div className="text-3xl font-black text-zinc-600 tracking-tighter">
               PHASE {currentIndex + 1}
               <span className="text-zinc-600 ml-2 text-xl">
                 / {quizzes.length}
@@ -77,9 +114,9 @@ export default function QuizBoard() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 z-100 flex items-center justify-center bg-black/80 backdrop-blur-xl p-6"
+            className="absolute inset-0 z-100 flex items-center justify-center bg-black/80 backdrop-blur-xl p-6 pointer-events-auto"
           >
-            {/* 기존 피드백 팝업 디자인 유지 또는 수정 */}
+            {/* 정답(오답) 팝업 */}
             <div
               className={`max-w-xl p-10 rounded-3xl border ${feedback.isCorrect ? "border-cyan-500 bg-cyan-950/20" : "border-red-500 bg-red-950/20"}`}
             >

@@ -49,7 +49,11 @@ export default function Home() {
       ref={containerRef}
       className={`relative bg-black min-h-screen ${showModeSelect ? "h-screen overflow-hidden" : "md:h-[500vh]"}`}
     >
-      <div className={stage === "warp_in" ? "hidden" : "block"}>
+      <div
+        className={
+          stage === "warp_in" || stage === "return_warp" ? "hidden" : "block"
+        }
+      >
         <IntroOverlay />
       </div>
 

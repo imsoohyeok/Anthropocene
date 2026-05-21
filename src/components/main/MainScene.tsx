@@ -16,7 +16,10 @@ export default function MainScene({ hazardLevel, co2 }: MainSceneProps) {
   const stage = useIntroStore((state) => state.stage);
 
   const displayHazard =
-    stage === "idle" || stage === "zooming" || stage === "warp_in"
+    stage === "idle" ||
+    stage === "zooming" ||
+    stage === "warp_in" ||
+    stage === "return_warp"
       ? 0
       : hazardLevel;
 
