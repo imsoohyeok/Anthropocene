@@ -22,13 +22,6 @@ export default function HologramCard({
       {/* 홀로그램 스캔라인 효과 */}
       <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,255,255,0.05)_50%)] bg-size-[100%_4px]" />
 
-      <h2
-        className="text-sm font-bold tracking-widest mb-2 uppercase"
-        style={{ color: themeColor }}
-      >
-        Carbon Action #{quiz.id}
-      </h2>
-
       <p className="text-white text-xl md:text-2xl font-medium leading-snug mb-8 break-keep">
         {quiz.question}
       </p>

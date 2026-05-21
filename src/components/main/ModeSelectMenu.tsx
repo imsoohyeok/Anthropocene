@@ -1,12 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-
-interface ModeSelectMenuProps {
-  isWarping: boolean;
-  onClose: () => void;
-  onSelectMode: (mode: "scenario" | "random") => void;
-}
+import { ModeSelectMenuProps } from "@/types/ModeSelectMenu";
 
 export default function ModeSelectMenu({
   isWarping,

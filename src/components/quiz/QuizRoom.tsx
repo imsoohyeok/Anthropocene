@@ -5,24 +5,9 @@ import Image from "next/image";
 import HologramCard from "./HologramCard";
 import { THEME_CONFIG } from "@/data/QuizRoom";
 import { QuizRoomProps } from "@/types/quiz";
-import { useRef, useEffect } from "react";
 
 export default function QuizRoom({ quiz, onAnswer }: QuizRoomProps) {
-  const bgRef = useRef<HTMLDivElement>(null);
-  const config = THEME_CONFIG[quiz.theme];
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!bgRef.current) return;
-      const { clientX, clientY } = e;
-      const moveX = (clientX - window.innerWidth / 2) / 60;
-      const moveY = (clientY - window.innerHeight / 2) / 60;
-      bgRef.current.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.05)`;
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  const config = THEME_CONFIG[quiz?.theme] || THEME_CONFIG["kitchen"];
 
   return (
     <div className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-black">
@@ -30,19 +15,18 @@ export default function QuizRoom({ quiz, onAnswer }: QuizRoomProps) {
       <AnimatePresence mode="wait">
         <motion.div
           key={quiz.theme}
-          initial={{ opacity: 0, scale: 1.15, filter: "blur(20px)" }}
-          animate={{ opacity: 1, scale: 1.05, filter: "blur(2px)" }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="absolute inset-0 z-0"
-          ref={bgRef}
         >
           <Image
             src={config.bg}
             alt={`${quiz.theme} background`}
             fill
             priority
-            className="object-cover opacity-50"
+            className="object-cover"
           />
           <div
             className="absolute inset-0"

@@ -44,12 +44,14 @@ export default function QuizBoard() {
       <div className="absolute top-0 left-0 w-full z-50 p-8 pointer-events-none">
         <div className="max-w-7xl mx-auto flex justify-between items-start pointer-events-auto">
           <div className="space-y-1">
-            <button
-              onClick={exitToMenu}
-              className="text-zinc-500 hover:text-white transition-colors text-[10px] font-black tracking-[0.4em] uppercase"
-            >
-              Exit Protocol
-            </button>
+            <div className="mb-4">
+              <button
+                onClick={exitToMenu}
+                className="text-zinc-500 hover:text-white transition-colors text-[16px] font-black tracking-[0.4em] uppercase"
+              >
+                모드 선택
+              </button>
+            </div>
             <div className="text-3xl font-black text-white tracking-tighter">
               PHASE {currentIndex + 1}
               <span className="text-zinc-600 ml-2 text-xl">
@@ -57,10 +59,7 @@ export default function QuizBoard() {
               </span>
             </div>
           </div>
-          <div className="text-right space-y-1">
-            <span className="text-red-500 text-[10px] font-black tracking-[0.4em] uppercase">
-              Toxicity Level
-            </span>
+          <div className="text-right space-y-1 mt-11">
             <div className="text-4xl font-black text-red-600 tabular-nums shadow-red-500/20 drop-shadow-lg">
               {waterLevel}%
             </div>
@@ -84,8 +83,8 @@ export default function QuizBoard() {
             <div
               className={`max-w-xl p-10 rounded-3xl border ${feedback.isCorrect ? "border-cyan-500 bg-cyan-950/20" : "border-red-500 bg-red-950/20"}`}
             >
-              <h3 className="text-4xl font-black mb-4 uppercase italic">
-                {feedback.isCorrect ? "Success" : "Warning"}
+              <h3 className="text-4xl font-black mb-4 uppercase">
+                {feedback.isCorrect ? "정답" : "오답"}
               </h3>
               <p className="text-zinc-300 leading-relaxed mb-8">
                 {feedback.text}
@@ -94,7 +93,7 @@ export default function QuizBoard() {
                 onClick={onNextClick}
                 className="w-full py-4 bg-white text-black font-black uppercase tracking-widest hover:bg-cyan-400 transition-colors"
               >
-                Continue
+                다음 문제
               </button>
             </div>
           </motion.div>
