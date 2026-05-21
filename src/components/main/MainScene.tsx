@@ -5,9 +5,9 @@ import gsap from "gsap";
 import { MainSceneProps } from "@/types/MainScene";
 import { Canvas } from "@react-three/fiber";
 import { Bloom, EffectComposer } from "@react-three/postprocessing";
-import EarthModel from "./animation/EarthModel";
-import DustParticle from "./animation/DustParticle";
-import CameraHandler from "./animation/CameraHandler";
+import EarthModel from "../animation/EarthModel";
+import DustParticle from "../animation/DustParticle";
+import CameraHandler from "../animation/CameraHandler";
 import { useIntroStore } from "@/store/useIntroStore";
 
 export default function MainScene({ hazardLevel, co2 }: MainSceneProps) {
