@@ -15,12 +15,6 @@ export type QuizItem = {
   theme: "kitchen" | "living" | "utility" | "entrance" | "restroom";
 };
 
-export interface HologramCardProps {
-  quiz: QuizItem;
-  onAnswer: (isCorrect: boolean, penalty: number) => void;
-  themeColor?: string; // 테마별 포인트 컬러
-}
-
 // 테마 타입
 export interface ThemeSetting {
   bg: string;
@@ -33,4 +27,10 @@ export type ThemeConfig = Record<QuizItem["theme"], ThemeSetting>;
 export interface QuizRoomProps {
   quiz: QuizItem;
   onAnswer: (isCorrect: boolean, penalty: number) => void;
+}
+
+export interface HologramCardProps {
+  quiz: QuizItem;
+  onAnswer: (isCorrect: boolean, penalty: number) => void;
+  themeColor?: string; // 테마별 포인트 컬러
 }
