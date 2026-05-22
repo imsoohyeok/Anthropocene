@@ -108,6 +108,7 @@ export default function Home() {
                 isWarping={isWarping}
                 onClose={() => {
                   setShowModeSelect(false);
+                  setYear(START_YEAR);
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
                 onSelectMode={handleModeSelect}
