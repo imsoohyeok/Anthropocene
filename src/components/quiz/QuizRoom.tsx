@@ -13,7 +13,7 @@ export default function QuizRoom({ quiz, onAnswer }: QuizRoomProps) {
 
   return (
     <div className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-black">
-      {/* 배경 레이어 */}
+      {/* 배경 이미지 레이어 */}
       <AnimatePresence mode="wait">
         <motion.div
           key={quiz.theme}
@@ -31,12 +31,12 @@ export default function QuizRoom({ quiz, onAnswer }: QuizRoomProps) {
             className="object-cover opacity-60"
           />
 
-          {/* 경고 엠비언스: 오답 누적 시 배경이 점점 붉게 변함 */}
-          <motion.div
-            animate={{
-              backgroundColor: `rgba(220, 38, 38, ${waterLevel * 0.003})`,
+          {/* 영구적 엠비언스: 수치가 높을수록 방 전체가 붉게 달아오름 */}
+          <div
+            className="absolute inset-0 pointer-events-none transition-colors duration-1000"
+            style={{
+              backgroundColor: `rgba(220, 38, 38, ${waterLevel * 0.004})`,
             }}
-            className="absolute inset-0 pointer-events-none transition-all duration-1000"
           />
 
           <div
@@ -49,7 +49,7 @@ export default function QuizRoom({ quiz, onAnswer }: QuizRoomProps) {
       </AnimatePresence>
 
       {/* 퀴즈 카드 레이어 */}
-      <div className="relative z-10 w-full max-w-xl px-6">
+      <div className="relative z-20 w-full max-w-xl px-6">
         <HologramCard
           quiz={quiz}
           onAnswer={onAnswer}
@@ -57,8 +57,7 @@ export default function QuizRoom({ quiz, onAnswer }: QuizRoomProps) {
         />
       </div>
 
-      {/* 노이즈/먼지 효과 디테일 */}
-      <div className="absolute inset-0 pointer-events-none bg-[url('/images/noise.png')] opacity-[0.02] mix-blend-overlay" />
+      <div className="absolute inset-0 pointer-events-none bg-[url('/images/noise.png')] opacity-[0.03] mix-blend-overlay z-30" />
     </div>
   );
 }

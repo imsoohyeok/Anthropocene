@@ -1,10 +1,11 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { useQuizFeedback } from "@/hooks/useQuizFeedback";
+import { useGameStore } from "@/store/useGameStore";
 import GameOverScreen from "./GameOverScreen";
 import GameClearScreen from "./GameClearScreen";
-import { useGameStore } from "@/store/useGameStore";
-import { AnimatePresence, motion } from "framer-motion";
 import QuizRoom from "./QuizRoom";
 
 export default function QuizBoard() {
@@ -19,19 +20,48 @@ export default function QuizBoard() {
     resetGame,
     exitToMenu,
   } = useGameStore();
-
   const currentQuiz = quizzes?.[currentIndex];
-
   const { feedback, onOptionClick, onNextClick } = useQuizFeedback(
     currentQuiz?.explanation || "",
     submitAnswer,
   );
 
-  if (!quizzes || !currentQuiz) return null;
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [isFlashing, setIsFlashing] = useState(false);
 
+  useEffect(() => {
+    let modalTimer: NodeJS.Timeout;
+    let flashEndTimer: NodeJS.Timeout;
+    let flashStartTimer: NodeJS.Timeout;
+
+    if (feedback) {
+      if (!feedback.isCorrect) {
+        // 오답: 붉은색 플래시 (0.5초 대기 후 모달)
+        flashStartTimer = setTimeout(() => setIsFlashing(true), 0);
+        flashEndTimer = setTimeout(() => setIsFlashing(false), 600);
+        modalTimer = setTimeout(() => setShowFeedbackModal(true), 500);
+      } else {
+        // 정답: 파란색 플래시 (대기 없이 모달 즉시)
+        flashStartTimer = setTimeout(() => setIsFlashing(true), 0);
+        flashEndTimer = setTimeout(() => setIsFlashing(false), 400);
+        modalTimer = setTimeout(() => setShowFeedbackModal(true), 500);
+      }
+    } else {
+      // 다음 문제 초기화
+      modalTimer = setTimeout(() => setShowFeedbackModal(false), 0);
+      flashStartTimer = setTimeout(() => setIsFlashing(false), 0);
+    }
+
+    return () => {
+      clearTimeout(modalTimer);
+      clearTimeout(flashEndTimer);
+      clearTimeout(flashStartTimer);
+    };
+  }, [feedback]);
+
+  if (!quizzes || !currentQuiz) return null;
   if (isGameOver)
     return <GameOverScreen resetGame={resetGame} onExit={exitToMenu} />;
-
   if (isFinished)
     return (
       <GameClearScreen
@@ -42,22 +72,21 @@ export default function QuizBoard() {
     );
 
   return (
-    <main className="relative w-full h-screen bg-black">
-      {/* HUD: 상단 정보 레이어 */}
+    <main className="relative w-full h-screen bg-black overflow-hidden">
+      {/* HUD 레이어 생략 (기존과 동일) */}
       <div className="absolute top-0 left-0 w-full z-50 p-8 pointer-events-none">
         <div className="max-w-7xl mx-auto flex justify-between items-start pointer-events-auto">
           <div className="space-y-1">
-            {/* 네비게이션 버튼 그룹 */}
             <div className="mb-4 flex items-center gap-6">
               <button
                 onClick={exitToMenu}
-                className="text-zinc-500 hover:text-black transition-colors text-sm font-black tracking-[0.2em] uppercase"
+                className="text-zinc-500 hover:text-white transition-colors text-sm font-black tracking-[0.2em] uppercase"
               >
                 모드 선택
               </button>
             </div>
             <div className="text-3xl font-black text-zinc-600 tracking-tighter">
-              PHASE {currentIndex + 1}
+              PHASE {currentIndex + 1}{" "}
               <span className="text-zinc-600 ml-2 text-xl">
                 / {quizzes.length}
               </span>
@@ -74,16 +103,33 @@ export default function QuizBoard() {
       {/* 메인 3D 시네마틱 룸 */}
       <QuizRoom quiz={currentQuiz} onAnswer={onOptionClick} />
 
-      {/* 피드백 모달 */}
+      {/* 정답(or 오답) 시 플래시 */}
       <AnimatePresence>
-        {feedback && (
+        {isFlashing && feedback && (
+          <motion.div
+            initial={{ opacity: 0.8 }}
+            animate={{ opacity: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{
+              duration: feedback.isCorrect ? 0.4 : 0.6,
+              ease: "easeOut",
+            }}
+            className={`absolute inset-0 mix-blend-overlay pointer-events-none z-90 
+              ${feedback.isCorrect ? "bg-cyan-500" : "bg-red-600"}`}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* 피드백 모달 (z-[100]) */}
+      <AnimatePresence>
+        {showFeedbackModal && feedback && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
             className="absolute inset-0 z-100 flex items-center justify-center bg-black/80 backdrop-blur-xl p-6 pointer-events-auto"
           >
-            {/* 정답(오답) 팝업 */}
             <div
               className={`max-w-xl p-10 rounded-3xl border ${feedback.isCorrect ? "border-cyan-500 bg-cyan-950/20" : "border-red-500 bg-red-950/20"}`}
             >
