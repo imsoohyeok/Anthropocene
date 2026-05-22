@@ -1,21 +1,13 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useQuizFeedback } from "@/hooks/useQuizFeedback";
 import GameOverScreen from "./GameOverScreen";
 import GameClearScreen from "./GameClearScreen";
-import { useIntroStore } from "@/store/useIntroStore";
 import { useGameStore } from "@/store/useGameStore";
 import { AnimatePresence, motion } from "framer-motion";
 import QuizRoom from "./QuizRoom";
-import { useState } from "react";
 
 export default function QuizBoard() {
-  const router = useRouter();
-
-  const setStage = useIntroStore((state) => state.setStage);
-  const [isReturning, setIsReturning] = useState(false);
-
   const {
     quizzes,
     currentIndex,
@@ -35,19 +27,11 @@ export default function QuizBoard() {
     submitAnswer,
   );
 
-  const handleReturnToMain = () => {
-    setIsReturning(true);
-    setStage("return_warp");
-
-    setTimeout(() => {
-      exitToMenu();
-      router.push("/");
-    }, 1200);
-  };
-
   if (!quizzes || !currentQuiz) return null;
+
   if (isGameOver)
     return <GameOverScreen resetGame={resetGame} onExit={exitToMenu} />;
+
   if (isFinished)
     return (
       <GameClearScreen
@@ -59,29 +43,12 @@ export default function QuizBoard() {
 
   return (
     <main className="relative w-full h-screen bg-black">
-      <AnimatePresence>
-        {isReturning && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-            className="absolute inset-0 z-999 bg-white pointer-events-none"
-          />
-        )}
-      </AnimatePresence>
-
       {/* HUD: 상단 정보 레이어 */}
       <div className="absolute top-0 left-0 w-full z-50 p-8 pointer-events-none">
         <div className="max-w-7xl mx-auto flex justify-between items-start pointer-events-auto">
           <div className="space-y-1">
             {/* 네비게이션 버튼 그룹 */}
             <div className="mb-4 flex items-center gap-6">
-              <button
-                onClick={handleReturnToMain}
-                className="text-zinc-500 hover:text-black transition-colors text-sm font-black tracking-[0.2em] uppercase flex items-center"
-              >
-                메인 페이지
-              </button>
               <button
                 onClick={exitToMenu}
                 className="text-zinc-500 hover:text-black transition-colors text-sm font-black tracking-[0.2em] uppercase"
@@ -128,7 +95,7 @@ export default function QuizBoard() {
               </p>
               <button
                 onClick={onNextClick}
-                className="w-full py-4 bg-white text-black font-black uppercase tracking-widest hover:bg-cyan-400 transition-colors"
+                className="w-full py-4 bg-white text-black font-black uppercase tracking-widest hover:bg-amber-200 transition-colors"
               >
                 다음 문제
               </button>
