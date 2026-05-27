@@ -56,4 +56,5 @@ export interface CoordValue {
   left: string;
   width: string;
   height: string;
+  cardPos: "left" | "right" | "center";
 }
