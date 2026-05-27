@@ -3,8 +3,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import HologramCard from "./HologramCard";
-import { THEME_CONFIG } from "@/data/QuizRoom";
-import { QuizRoomProps } from "@/types/quiz";
+import { THEME_CONFIG, SPOTLIGHT_COORDS } from "@/data/QuizRoom";
+import { QuizRoomProps, SpotlightTarget } from "@/types/quiz";
 import { useGameStore } from "@/store/useGameStore";
 
 export default function QuizRoom({ quiz, onAnswer }: QuizRoomProps) {
@@ -13,7 +13,7 @@ export default function QuizRoom({ quiz, onAnswer }: QuizRoomProps) {
 
   return (
     <div className="relative w-full h-screen flex items-center justify-center overflow-hidden bg-black">
-      {/* 배경 이미지 레이어 */}
+      {/* 1. 배경 이미지 레이어 */}
       <AnimatePresence mode="wait">
         <motion.div
           key={quiz.theme}
@@ -48,6 +48,42 @@ export default function QuizRoom({ quiz, onAnswer }: QuizRoomProps) {
         </motion.div>
       </AnimatePresence>
 
+      {/* 스포트라이트 강조 레이어 (배경 위, 카드 뒤) */}
+      <AnimatePresence>
+        {quiz.highlightObject &&
+          SPOTLIGHT_COORDS[quiz.highlightObject as SpotlightTarget] && (
+            <motion.div
+              key={quiz.highlightObject} // 타겟이 바뀌면 애니메이션 새로 시작
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{
+                opacity: [0.3, 0.8, 0.3],
+                scale: [0.95, 1.05, 0.95],
+              }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute z-10 pointer-events-none rounded-full"
+              style={{
+                // 퀴즈 데이터가 지목한 사물의 좌표와 크기를 적용
+                top: SPOTLIGHT_COORDS[quiz.highlightObject as SpotlightTarget]
+                  .top,
+                left: SPOTLIGHT_COORDS[quiz.highlightObject as SpotlightTarget]
+                  .left,
+                width:
+                  SPOTLIGHT_COORDS[quiz.highlightObject as SpotlightTarget]
+                    .width,
+                height:
+                  SPOTLIGHT_COORDS[quiz.highlightObject as SpotlightTarget]
+                    .height,
+
+                // 현재 테마의 메인 컬러(config.color)를 활용한 홀로그램 빛무리
+                background: `radial-gradient(circle, ${config.color}80 0%, transparent 70%)`,
+                mixBlendMode: "screen",
+                boxShadow: `0 0 40px 10px ${config.color}4d`,
+              }}
+            />
+          )}
+      </AnimatePresence>
+
       {/* 퀴즈 카드 레이어 */}
       <div className="relative z-20 w-full max-w-xl px-6">
         <HologramCard
@@ -56,8 +92,6 @@ export default function QuizRoom({ quiz, onAnswer }: QuizRoomProps) {
           themeColor={config.color}
         />
       </div>
-
-      <div className="absolute inset-0 pointer-events-none bg-[url('/images/noise.png')] opacity-[0.03] mix-blend-overlay z-30" />
     </div>
   );
 }
