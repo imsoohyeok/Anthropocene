@@ -1,4 +1,11 @@
+export type IntroStage =
+  | "idle"
+  | "zooming"
+  | "finished"
+  | "warp_in"
+  | "return_warp";
+
 export interface IntroState {
-  stage: "idle" | "zooming" | "finished";
-  setStage: (stage: "idle" | "zooming" | "finished") => void;
+  stage: IntroStage;
+  setStage: (stage: IntroStage) => void;
 }
