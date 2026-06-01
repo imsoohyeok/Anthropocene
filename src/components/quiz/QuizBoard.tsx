@@ -60,16 +60,21 @@ export default function QuizBoard() {
   }, [feedback]);
 
   if (!quizzes || !currentQuiz) return null;
+
   if (isGameOver)
     return <GameOverScreen resetGame={resetGame} onExit={exitToMenu} />;
-  if (isFinished)
+
+  if (isFinished) {
+    const accuracyRate = Math.round((score / quizzes.length) * 100);
+
     return (
       <GameClearScreen
-        score={score}
+        score={accuracyRate}
         waterLevel={waterLevel}
         onExit={exitToMenu}
       />
     );
+  }
 
   return (
     <main className="relative w-full h-screen bg-black overflow-hidden">

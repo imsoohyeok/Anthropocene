@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { GameClearScreenProps } from "@/types/GameClearScreen";
 
 export default function GameClearScreen({
@@ -6,22 +9,83 @@ export default function GameClearScreen({
   onExit,
 }: GameClearScreenProps) {
   return (
-    <div className="flex flex-col items-center justify-center w-full h-screen bg-zinc-900 text-white z-50 relative">
-      <h1 className="text-7xl md:text-8xl font-black mb-4 text-blue-500 tracking-tighter">
-        SURVIVED
-      </h1>
-      <p className="text-xl text-zinc-300">
-        정답률: <span className="font-bold text-blue-400">{score}%</span>
-      </p>
-      <p className="text-lg text-zinc-400 mt-2">
-        최종 해수면 상승: {waterLevel}%
-      </p>
-      <button
-        onClick={onExit}
-        className="mt-10 px-10 py-4 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-500 transition-all shadow-lg hover:shadow-blue-500/50"
-      >
-        다른 모드 즐기기
-      </button>
-    </div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1.5, ease: "easeOut" }}
+      className="relative w-full h-screen bg-black flex flex-col items-center justify-center overflow-hidden z-50"
+    >
+      {/* 정화된 푸른 엠비언스 배경 */}
+      <motion.div
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 2.5, ease: "easeOut" }}
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle at center, rgba(37, 99, 235, 0.2) 0%, rgba(0, 0, 0, 1) 70%)",
+        }}
+      />
+
+      {/* 시네마틱 노이즈 */}
+      <div className="absolute inset-0 pointer-events-none bg-[url('/images/noise.png')] opacity-[0.03] mix-blend-overlay z-0" />
+
+      {/* 메인 콘텐츠 */}
+      <div className="relative z-10 flex flex-col items-center text-center px-6 w-full max-w-2xl">
+        <motion.div
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+          className="mb-12"
+        >
+          <h1 className="text-7xl md:text-8xl font-black text-blue-500 tracking-tighter mb-4 drop-shadow-[0_0_30px_rgba(37,99,235,0.6)]">
+            SURVIVED
+          </h1>
+        </motion.div>
+
+        {/* 결과 스탯 보드 (Glassmorphism) */}
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 1, ease: "easeOut" }}
+          className="w-full flex justify-center gap-12 md:gap-24 mb-16 p-8 border border-blue-500/20 bg-blue-950/20 backdrop-blur-xl rounded-3xl shadow-[0_0_40px_rgba(37,99,235,0.1)]"
+        >
+          <div className="flex flex-col items-center">
+            <span className="text-zinc-400 text-sm font-bold tracking-[0.2em] uppercase mb-2">
+              정답률
+            </span>
+            <div className="text-5xl font-black text-blue-400 tabular-nums">
+              {score}
+              <span className="text-3xl">%</span>
+            </div>
+          </div>
+          <div className="w-px bg-blue-500/20" /> {/* 구분선 */}
+          <div className="flex flex-col items-center">
+            <span className="text-zinc-400 text-sm font-bold tracking-[0.2em] uppercase mb-2">
+              최종 해수면 상승
+            </span>
+            <div className="text-5xl font-black text-white tabular-nums">
+              {waterLevel}
+              <span className="text-3xl">%</span>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* 돌아가기 버튼 */}
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 1.5, ease: "easeOut" }}
+        >
+          <button
+            onClick={onExit}
+            className="py-4 px-12 bg-blue-600 text-white font-black tracking-widest rounded-full hover:bg-blue-500 hover:scale-105 hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] transition-all duration-300"
+          >
+            다른 모드 즐기기
+          </button>
+        </motion.div>
+      </div>
+    </motion.div>
   );
 }
