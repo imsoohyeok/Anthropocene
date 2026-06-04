@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { FlashBangProps } from "@/types/FlashBangOverlay";
+import { FlashBangProps } from "@/types/NameError";
 
 export default function FlashBangOverlay({
   isWarping,
