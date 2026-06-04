@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import useSound from "use-sound";
 import { useQuizFeedback } from "@/hooks/useQuizFeedback";
 import { useGameStore } from "@/store/useGameStore";
 import GameOverScreen from "./GameOverScreen";
@@ -29,6 +30,9 @@ export default function QuizBoard() {
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const [isFlashing, setIsFlashing] = useState(false);
 
+  const [playCorrect] = useSound("/sounds/correct.mp3", { volume: 0.7 });
+  const [playWrong] = useSound("/sounds/wrong.mp3", { volume: 1.0 });
+
   useEffect(() => {
     let modalTimer: NodeJS.Timeout;
     let flashEndTimer: NodeJS.Timeout;
@@ -37,12 +41,20 @@ export default function QuizBoard() {
     if (feedback) {
       if (!feedback.isCorrect) {
         // 오답: 붉은색 플래시 (0.5초 대기 후 모달)
-        flashStartTimer = setTimeout(() => setIsFlashing(true), 0);
+        flashStartTimer = setTimeout(() => {
+          setIsFlashing(true);
+          playWrong();
+        }, 0);
+
         flashEndTimer = setTimeout(() => setIsFlashing(false), 600);
         modalTimer = setTimeout(() => setShowFeedbackModal(true), 500);
       } else {
         // 정답: 파란색 플래시 (대기 없이 모달 즉시)
-        flashStartTimer = setTimeout(() => setIsFlashing(true), 0);
+        flashStartTimer = setTimeout(() => {
+          setIsFlashing(true);
+          playCorrect();
+        }, 0);
+
         flashEndTimer = setTimeout(() => setIsFlashing(false), 400);
         modalTimer = setTimeout(() => setShowFeedbackModal(true), 500);
       }
@@ -57,7 +69,7 @@ export default function QuizBoard() {
       clearTimeout(flashEndTimer);
       clearTimeout(flashStartTimer);
     };
-  }, [feedback]);
+  }, [feedback, playCorrect, playWrong]);
 
   if (!quizzes || !currentQuiz) return null;
 
