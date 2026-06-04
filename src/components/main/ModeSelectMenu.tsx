@@ -35,7 +35,7 @@ export default function ModeSelectMenu({
           모드 선택
         </h1>
         <p className="text-zinc-300 mb-12 text-center text-sm md:text-base tracking-wider">
-          인류의 운명을 결정할 방식을 선택하십시오
+          두 가지 선택지 중 골라서 플레이
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl">
@@ -45,7 +45,6 @@ export default function ModeSelectMenu({
             disabled={isWarping}
             className="group relative flex flex-col items-start p-10 bg-white/5 backdrop-blur-xl border border-cyan-500/30 rounded-3xl hover:bg-cyan-950/30 hover:border-cyan-400 transition-all duration-500 text-left overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(6,182,212,0.1)] hover:shadow-[0_0_50px_rgba(6,182,212,0.3)]"
           >
-            <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(0,255,255,0)_50%,rgba(0,255,255,0.05)_50%)] bg-size-[100%_4px]" />
             <span className="relative text-cyan-400 font-black tracking-[0.3em] text-xs mb-4 uppercase drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]">
               Mode 1
             </span>
@@ -53,8 +52,7 @@ export default function ModeSelectMenu({
               비슷한 선택지
             </h2>
             <p className="relative text-zinc-400 leading-relaxed break-keep group-hover:text-zinc-200 transition-colors">
-              일상 속 환경 문제 상황. 주어진 2가지 선택지 중 지구를 위해 당장
-              실천해야 할 최선의 행동을 찾아냅니다.
+              비슷한 종류의 에너지 절약 방식이 선택지로 주어집니다.
             </p>
           </button>
 
@@ -64,7 +62,6 @@ export default function ModeSelectMenu({
             disabled={isWarping}
             className="group relative flex flex-col items-start p-10 bg-white/5 backdrop-blur-xl border border-red-500/30 rounded-3xl hover:bg-red-950/30 hover:border-red-400 transition-all duration-500 text-left overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_30px_rgba(239,68,68,0.1)] hover:shadow-[0_0_50px_rgba(239,68,68,0.3)]"
           >
-            <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(255,0,0,0)_50%,rgba(255,0,0,0.05)_50%)] bg-size-[100%_4px]" />
             <span className="relative text-red-500 font-black tracking-[0.3em] text-xs mb-4 uppercase drop-shadow-[0_0_8px_rgba(239,68,68,0.8)]">
               Mode 2
             </span>
@@ -72,8 +69,7 @@ export default function ModeSelectMenu({
               무작위 선택지
             </h2>
             <p className="relative text-zinc-400 leading-relaxed break-keep group-hover:text-zinc-200 transition-colors">
-              무작위로 맞붙는 친환경 행동. 데이터상으로 온실가스를 더 많이
-              감축하는 행동을 골라내십시오.
+              에너지 절약 방식이 종류에 상관없이 무작위로 주어집니다.
             </p>
           </button>
         </div>
