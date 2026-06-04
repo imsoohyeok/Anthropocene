@@ -22,7 +22,7 @@ export default function DashboardOverlay({
             {label}
           </p>
         </div>
-        <p className="text-sm mb:text-lg text-zinc-400 leading-relaxed font-light">
+        <p className="text-sm mb:text-lg text-zinc-500 leading-relaxed font-light">
           {description}
         </p>
       </div>
@@ -67,7 +67,7 @@ export default function DashboardOverlay({
           <span className="relative tracking-widest z-10">지구 지키기</span>
         </button>
 
-        <p className="mt-2 text-zinc-400 text-sm tracking-widest animate-pulse text-center w-full">
+        <p className="mt-2 text-zinc-600 text-sm tracking-widest animate-pulse text-center w-full">
           미니게임을 통해 지구를 지키세요
         </p>
       </div>

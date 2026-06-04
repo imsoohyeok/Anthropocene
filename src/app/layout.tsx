@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "인류세",
-  description: "인류세의 영향으로 인한 앞으로의 미래",
+  title: "SavEnergy",
+  description: "일상생활 속 에너지 절약 방법을 미니게임을 통해 알아보세요!",
   other: {
     google: "notranslate",
   },
