@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import useSound from "use-sound";
 import { HologramCardProps, QuizOption } from "@/types/quiz";
 
 export default function HologramCard({
@@ -10,6 +11,9 @@ export default function HologramCard({
   themeColor = "#00f2ff",
 }: HologramCardProps) {
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
+
+  const [playHover] = useSound("/sounds/hover.mp3", { volume: 0.2 });
+  const [playClick] = useSound("/sounds/click.mp3", { volume: 0.5 });
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -32,9 +36,6 @@ export default function HologramCard({
         boxShadow: `0 0 30px ${themeColor}26`,
       }}
     >
-      {/* 홀로그램 스캔라인 효과 */}
-      <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,255,255,0.05)_50%)] bg-size-[100%_4px]" />
-
       <p className="text-white text-xl md:text-2xl font-medium leading-snug mb-8 break-keep relative z-10">
         {quiz.question}
       </p>
@@ -49,6 +50,9 @@ export default function HologramCard({
           return (
             <motion.button
               key={key}
+              onHoverStart={() => {
+                if (selectedKey === null) playHover();
+              }}
               // 동적 애니메이션: 선택 여부에 따라 크기, 투명도, 블러 효과 처리
               animate={{
                 scale: isSelected ? 1.05 : isAnotherSelected ? 0.95 : 1,
@@ -73,6 +77,7 @@ export default function HologramCard({
                 // 중복 클릭 방지: 이미 무언가 선택되었다면 무시
                 if (selectedKey !== null) return;
 
+                playClick();
                 setSelectedKey(key);
                 onAnswer(currentOption.isCorrect, quiz.penalty);
               }}

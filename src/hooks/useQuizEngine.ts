@@ -3,7 +3,7 @@ import { QuizItem } from "@/types/quiz";
 
 export const useQuizEngine = (quizzes: QuizItem[]) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [waterLevel, setWaterLevel] = useState(0);
+  const [overloadRate, setOverloadRate] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
@@ -20,13 +20,13 @@ export const useQuizEngine = (quizzes: QuizItem[]) => {
       if (isCorrect) {
         setCorrectCount((prev) => prev + 1);
       } else {
-        const nextWaterLevel = waterLevel + currentQuiz.penalty;
-        if (nextWaterLevel >= 100) {
-          setWaterLevel(100);
+        const nextOverloadRate = overloadRate + currentQuiz.penalty;
+        if (nextOverloadRate >= 100) {
+          setOverloadRate(100);
           setIsGameOver(true);
           return;
         }
-        setWaterLevel(nextWaterLevel);
+        setOverloadRate(nextOverloadRate);
       }
 
       if (currentIndex < quizzes.length - 1) {
@@ -37,7 +37,7 @@ export const useQuizEngine = (quizzes: QuizItem[]) => {
     },
     [
       currentIndex,
-      waterLevel,
+      overloadRate,
       isGameOver,
       isFinished,
       currentQuiz,
@@ -47,7 +47,7 @@ export const useQuizEngine = (quizzes: QuizItem[]) => {
 
   const resetEngine = useCallback(() => {
     setCurrentIndex(0);
-    setWaterLevel(0);
+    setOverloadRate(0);
     setCorrectCount(0);
     setIsGameOver(false);
     setIsFinished(false);
@@ -56,7 +56,7 @@ export const useQuizEngine = (quizzes: QuizItem[]) => {
   return {
     currentQuiz,
     currentIndex,
-    waterLevel,
+    overloadRate,
     correctCount,
     isGameOver,
     isFinished,

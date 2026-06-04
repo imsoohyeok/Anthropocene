@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import useSound from "use-sound";
 import { useQuizFeedback } from "@/hooks/useQuizFeedback";
 import { useGameStore } from "@/store/useGameStore";
+import FeedbackScale from "./FeedbackBattery";
 import GameOverScreen from "./GameOverScreen";
 import GameClearScreen from "./GameClearScreen";
 import QuizRoom from "./QuizRoom";
@@ -12,7 +14,7 @@ export default function QuizBoard() {
   const {
     quizzes,
     currentIndex,
-    waterLevel,
+    overloadRate,
     score,
     isGameOver,
     isFinished,
@@ -29,6 +31,9 @@ export default function QuizBoard() {
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const [isFlashing, setIsFlashing] = useState(false);
 
+  const [playCorrect] = useSound("/sounds/correct.mp3", { volume: 0.7 });
+  const [playWrong] = useSound("/sounds/wrong.mp3", { volume: 1.0 });
+
   useEffect(() => {
     let modalTimer: NodeJS.Timeout;
     let flashEndTimer: NodeJS.Timeout;
@@ -37,12 +42,20 @@ export default function QuizBoard() {
     if (feedback) {
       if (!feedback.isCorrect) {
         // 오답: 붉은색 플래시 (0.5초 대기 후 모달)
-        flashStartTimer = setTimeout(() => setIsFlashing(true), 0);
+        flashStartTimer = setTimeout(() => {
+          setIsFlashing(true);
+          playWrong();
+        }, 0);
+
         flashEndTimer = setTimeout(() => setIsFlashing(false), 600);
         modalTimer = setTimeout(() => setShowFeedbackModal(true), 500);
       } else {
         // 정답: 파란색 플래시 (대기 없이 모달 즉시)
-        flashStartTimer = setTimeout(() => setIsFlashing(true), 0);
+        flashStartTimer = setTimeout(() => {
+          setIsFlashing(true);
+          playCorrect();
+        }, 0);
+
         flashEndTimer = setTimeout(() => setIsFlashing(false), 400);
         modalTimer = setTimeout(() => setShowFeedbackModal(true), 500);
       }
@@ -57,19 +70,24 @@ export default function QuizBoard() {
       clearTimeout(flashEndTimer);
       clearTimeout(flashStartTimer);
     };
-  }, [feedback]);
+  }, [feedback, playCorrect, playWrong]);
 
   if (!quizzes || !currentQuiz) return null;
+
   if (isGameOver)
     return <GameOverScreen resetGame={resetGame} onExit={exitToMenu} />;
-  if (isFinished)
+
+  if (isFinished) {
+    const accuracyRate = Math.round((score / quizzes.length) * 100);
+
     return (
       <GameClearScreen
-        score={score}
-        waterLevel={waterLevel}
+        score={accuracyRate}
+        overloadRate={overloadRate}
         onExit={exitToMenu}
       />
     );
+  }
 
   return (
     <main className="relative w-full h-screen bg-black overflow-hidden">
@@ -94,7 +112,7 @@ export default function QuizBoard() {
           </div>
           <div className="text-right space-y-1 mt-11">
             <div className="text-4xl font-black text-red-600 tabular-nums shadow-red-500/20 drop-shadow-lg">
-              {waterLevel}%
+              {overloadRate}%
             </div>
           </div>
         </div>
@@ -136,12 +154,18 @@ export default function QuizBoard() {
               <h3 className="text-4xl font-black mb-4 uppercase">
                 {feedback.isCorrect ? "정답" : "오답"}
               </h3>
-              <p className="text-zinc-300 leading-relaxed mb-8">
+
+              <FeedbackScale
+                quiz={currentQuiz}
+                isUserCorrect={feedback.isCorrect}
+              />
+
+              <p className="whitespace-pre-wrap text-zinc-300 leading-relaxed mb-8 ">
                 {feedback.text}
               </p>
               <button
                 onClick={onNextClick}
-                className="w-full py-4 bg-white text-black font-black uppercase tracking-widest hover:bg-amber-200 transition-colors"
+                className="w-full py-4 bg-white text-black font-black uppercase tracking-widest hover:bg-mist-300 transition-colors"
               >
                 다음 문제
               </button>
