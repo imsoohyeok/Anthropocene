@@ -88,7 +88,7 @@ export default function FeedbackBattery({
                   : "text-red-300 border-red-500/50 shadow-[0_0_10px_#ef4444] animate-pulse"
             }`}
           >
-            {option.isCorrect ? "에너지 절약" : `환경 부담 상승`}
+            {option.isCorrect ? "에너지 절약" : `환경 오염`}
           </div>
 
           <span

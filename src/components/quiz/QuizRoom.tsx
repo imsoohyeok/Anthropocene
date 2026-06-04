@@ -9,7 +9,7 @@ import { useGameStore } from "@/store/useGameStore";
 
 export default function QuizRoom({ quiz, onAnswer }: QuizRoomProps) {
   const config = THEME_CONFIG[quiz.theme];
-  const waterLevel = useGameStore((state) => state.waterLevel);
+  const overloadRate = useGameStore((state) => state.overloadRate);
 
   const targetObj = quiz.highlightObject
     ? SPOTLIGHT_COORDS[quiz.highlightObject as SpotlightTarget]
@@ -49,7 +49,7 @@ export default function QuizRoom({ quiz, onAnswer }: QuizRoomProps) {
           <div
             className="absolute inset-0 pointer-events-none transition-colors duration-1000"
             style={{
-              backgroundColor: `rgba(220, 38, 38, ${waterLevel * 0.004})`,
+              backgroundColor: `rgba(220, 38, 38, ${overloadRate * 0.004})`,
             }}
           />
 

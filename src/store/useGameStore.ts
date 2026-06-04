@@ -6,7 +6,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   mode: "main", // 처음 시작은 무조건 메인 화면
   quizzes: [],
   currentIndex: 0,
-  waterLevel: 0,
+  overloadRate: 0,
   score: 0,
   isGameOver: false,
   isFinished: false,
@@ -22,7 +22,7 @@ export const useGameStore = create<GameState>((set, get) => ({
       mode,
       quizzes,
       currentIndex: 0,
-      waterLevel: 0,
+      overloadRate: 0,
       score: 0,
       isGameOver: false,
       isFinished: false,
@@ -32,24 +32,24 @@ export const useGameStore = create<GameState>((set, get) => ({
   submitAnswer: (isCorrect) => {
     const state = get();
 
-    let newWaterLevel = state.waterLevel;
+    let newoverloadRate = state.overloadRate;
     let newScore = state.score;
 
     // 정답이면 점수 증가, 오답이면 해수면 10% 상승 (기획에 따라 수치 조절 가능)
     if (isCorrect) {
       newScore += 1;
     } else {
-      newWaterLevel += 10;
+      newoverloadRate += 10;
     }
 
     // 게임 종료 및 클리어 조건 판별
-    const isGameOver = newWaterLevel >= 100;
+    const isGameOver = newoverloadRate >= 100;
     const isFinished =
       !isGameOver && state.currentIndex + 1 >= state.quizzes.length;
 
     // 변경된 상태를 스토어에 덮어씌웁니다 (set)
     set({
-      waterLevel: newWaterLevel,
+      overloadRate: newoverloadRate,
       score: newScore,
       isGameOver,
       isFinished,
@@ -64,7 +64,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   resetGame: () =>
     set({
       currentIndex: 0,
-      waterLevel: 0,
+      overloadRate: 0,
       score: 0,
       isGameOver: false,
       isFinished: false,
@@ -76,7 +76,7 @@ export const useGameStore = create<GameState>((set, get) => ({
       mode: "main",
       quizzes: [],
       currentIndex: 0,
-      waterLevel: 0,
+      overloadRate: 0,
       score: 0,
       isGameOver: false,
       isFinished: false,

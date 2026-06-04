@@ -14,7 +14,7 @@ const shuffleArray = <T>(array: T[]): T[] => {
 export const useScenarioQuiz = (initialQuizzes: QuizItem[]) => {
   const startGame = useGameStore((state) => state.startGame);
   const quizzes = useGameStore((state) => state.quizzes);
-  const waterLevel = useGameStore((state) => state.waterLevel);
+  const overloadRate = useGameStore((state) => state.overloadRate);
 
   useEffect(() => {
     const shuffledQuizzes = shuffleArray(initialQuizzes);
@@ -23,6 +23,6 @@ export const useScenarioQuiz = (initialQuizzes: QuizItem[]) => {
 
   return {
     isReady: quizzes.length > 0,
-    waterLevel,
+    overloadRate,
   };
 };

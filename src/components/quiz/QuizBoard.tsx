@@ -14,7 +14,7 @@ export default function QuizBoard() {
   const {
     quizzes,
     currentIndex,
-    waterLevel,
+    overloadRate,
     score,
     isGameOver,
     isFinished,
@@ -83,7 +83,7 @@ export default function QuizBoard() {
     return (
       <GameClearScreen
         score={accuracyRate}
-        waterLevel={waterLevel}
+        overloadRate={overloadRate}
         onExit={exitToMenu}
       />
     );
@@ -112,7 +112,7 @@ export default function QuizBoard() {
           </div>
           <div className="text-right space-y-1 mt-11">
             <div className="text-4xl font-black text-red-600 tabular-nums shadow-red-500/20 drop-shadow-lg">
-              {waterLevel}%
+              {overloadRate}%
             </div>
           </div>
         </div>

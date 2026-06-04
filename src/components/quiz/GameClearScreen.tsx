@@ -5,7 +5,7 @@ import { GameClearScreenProps } from "@/types/GameClearScreen";
 
 export default function GameClearScreen({
   score,
-  waterLevel,
+  overloadRate,
   onExit,
 }: GameClearScreenProps) {
   return (
@@ -63,10 +63,10 @@ export default function GameClearScreen({
           <div className="w-px bg-blue-500/20" /> {/* 구분선 */}
           <div className="flex flex-col items-center">
             <span className="text-zinc-400 text-sm font-bold tracking-[0.2em] uppercase mb-2">
-              최종 해수면 상승
+              환경 오염률
             </span>
             <div className="text-5xl font-black text-white tabular-nums">
-              {waterLevel}
+              {overloadRate}
               <span className="text-3xl">%</span>
             </div>
           </div>

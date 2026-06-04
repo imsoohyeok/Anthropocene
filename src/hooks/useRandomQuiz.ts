@@ -33,7 +33,7 @@ const generateRandomQuizzes = (roundCount: number = 10): QuizItem[] => {
 export const useRandomQuiz = (totalRounds: number = 10) => {
   const startGame = useGameStore((state) => state.startGame);
   const quizzes = useGameStore((state) => state.quizzes);
-  const waterLevel = useGameStore((state) => state.waterLevel);
+  const overloadRate = useGameStore((state) => state.overloadRate);
 
   useEffect(() => {
     const newDynamicQuizzes = generateRandomQuizzes(totalRounds);
@@ -42,6 +42,6 @@ export const useRandomQuiz = (totalRounds: number = 10) => {
 
   return {
     isReady: quizzes.length > 0,
-    waterLevel,
+    overloadRate,
   };
 };

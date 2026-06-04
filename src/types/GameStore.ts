@@ -6,7 +6,7 @@ export interface GameState {
   mode: GameMode;
   quizzes: QuizItem[];
   currentIndex: number;
-  waterLevel: number;
+  overloadRate: number;
   score: number;
   isGameOver: boolean;
   isFinished: boolean;

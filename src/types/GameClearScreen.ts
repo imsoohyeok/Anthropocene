@@ -1,5 +1,5 @@
 export interface GameClearScreenProps {
   score: number;
-  waterLevel: number;
+  overloadRate: number;
   onExit: () => void;
 }

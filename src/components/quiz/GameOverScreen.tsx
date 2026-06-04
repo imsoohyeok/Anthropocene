@@ -41,7 +41,7 @@ export default function GameOverScreen({
             GAME OVER
           </h1>
           <p className="text-xl md:text-2xl text-red-400/80 tracking-widest mb-12 font-medium">
-            해수면이 100% 차올라 인류가 위기에 처했습니다.
+            당신은 환경 오염의 주범이 되었습니다.
           </p>
         </motion.div>
 
