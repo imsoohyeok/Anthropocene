@@ -27,7 +27,7 @@ export default function QuizRoom({ quiz, onAnswer }: QuizRoomProps) {
     <div
       className={`relative w-full h-screen flex ${layoutClasses[cardPosition]} overflow-hidden bg-black transition-all duration-700`}
     >
-      {/* 1. 배경 이미지 레이어 */}
+      {/* 배경 이미지 레이어 */}
       <AnimatePresence mode="wait">
         <motion.div
           key={quiz.theme}
