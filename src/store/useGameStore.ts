@@ -29,27 +29,27 @@ export const useGameStore = create<GameState>((set, get) => ({
     }),
 
   // 정답 제출 로직 (핵심 비즈니스 로직)
-  submitAnswer: (isCorrect) => {
+  submitAnswer: (isCorrect, penalty) => {
     const state = get();
 
-    let newoverloadRate = state.overloadRate;
+    let newOverloadRate = state.overloadRate;
     let newScore = state.score;
 
     // 정답이면 점수 증가, 오답이면 해수면 10% 상승 (기획에 따라 수치 조절 가능)
     if (isCorrect) {
       newScore += 1;
     } else {
-      newoverloadRate += 10;
+      newOverloadRate += penalty;
     }
 
     // 게임 종료 및 클리어 조건 판별
-    const isGameOver = newoverloadRate >= 100;
+    const isGameOver = newOverloadRate >= 100;
     const isFinished =
       !isGameOver && state.currentIndex + 1 >= state.quizzes.length;
 
     // 변경된 상태를 스토어에 덮어씌웁니다 (set)
     set({
-      overloadRate: newoverloadRate,
+      overloadRate: Math.min(newOverloadRate, 100),
       score: newScore,
       isGameOver,
       isFinished,

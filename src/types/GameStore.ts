@@ -13,7 +13,7 @@ export interface GameState {
 
   changeMode: (mode: GameMode) => void;
   startGame: (quizzes: QuizItem[], mode: GameMode) => void;
-  submitAnswer: (isCorrect: boolean) => void;
+  submitAnswer: (isCorrect: boolean, penalty: number) => void;
   resetGame: () => void;
   exitToMenu: () => void;
 }

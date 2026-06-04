@@ -40,7 +40,7 @@ export default function GameClearScreen({
           className="mb-12"
         >
           <h1 className="text-7xl md:text-8xl font-black text-blue-500 tracking-tighter mb-4 drop-shadow-[0_0_30px_rgba(37,99,235,0.6)]">
-            SURVIVED
+            SURVIVE
           </h1>
         </motion.div>
 
@@ -53,7 +53,7 @@ export default function GameClearScreen({
         >
           <div className="flex flex-col items-center">
             <span className="text-zinc-400 text-sm font-bold tracking-[0.2em] uppercase mb-2">
-              정답률
+              에너지 절약률
             </span>
             <div className="text-5xl font-black text-blue-400 tabular-nums">
               {score}
