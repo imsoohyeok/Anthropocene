@@ -14,7 +14,7 @@ import DashboardOverlay from "@/components/main/DashboardOverlay";
 import YearController from "@/components/main/YearController";
 import IntroOverlay from "@/components/animation/IntroOverlay";
 import ModeSelectMenu from "@/components/main/ModeSelectMenu";
-import FlashBangOverlay from "@/components/animation/NameError";
+import FlashBangOverlay from "@/components/animation/FlashBangOverlay";
 
 const START_YEAR = timelineData[0].year;
 const END_YEAR = timelineData[timelineData.length - 1].year;
