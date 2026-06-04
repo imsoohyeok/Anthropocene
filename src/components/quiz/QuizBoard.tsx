@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import useSound from "use-sound";
 import { useQuizFeedback } from "@/hooks/useQuizFeedback";
 import { useGameStore } from "@/store/useGameStore";
+import FeedbackScale from "./FeedbackScale";
 import GameOverScreen from "./GameOverScreen";
 import GameClearScreen from "./GameClearScreen";
 import QuizRoom from "./QuizRoom";
@@ -153,12 +154,18 @@ export default function QuizBoard() {
               <h3 className="text-4xl font-black mb-4 uppercase">
                 {feedback.isCorrect ? "정답" : "오답"}
               </h3>
-              <p className="text-zinc-300 leading-relaxed mb-8">
+
+              <FeedbackScale
+                quiz={currentQuiz}
+                isUserCorrect={feedback.isCorrect}
+              />
+
+              <p className="whitespace-pre-wrap text-zinc-300 leading-relaxed mb-8 ">
                 {feedback.text}
               </p>
               <button
                 onClick={onNextClick}
-                className="w-full py-4 bg-white text-black font-black uppercase tracking-widest hover:bg-amber-200 transition-colors"
+                className="w-full py-4 bg-white text-black font-black uppercase tracking-widest hover:bg-mist-300 transition-colors"
               >
                 다음 문제
               </button>

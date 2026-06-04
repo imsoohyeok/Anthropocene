@@ -13,16 +13,15 @@ const generateRandomQuizzes = (roundCount: number = 10): QuizItem[] => {
 
     const aIsWinner = actionA.impactScore >= actionB.impactScore;
     const winner = aIsWinner ? actionA : actionB;
-    const loser = aIsWinner ? actionB : actionA;
 
     generatedQuizzes.push({
       id: i,
-      question: "다음 중 온실가스 감축에 더 큰 도움이 되는 행동은?",
+      question: "다음 중 에너지 절약에 더 큰 도움이 되는 행동은?",
       options: {
         A: { text: actionA.actionText, isCorrect: aIsWinner },
         B: { text: actionB.actionText, isCorrect: !aIsWinner },
       },
-      explanation: `정답: ${winner.actionText}\n\n${winner.explanation}\n\n• ${winner.actionText}\n: ${winner.impactScore}점\n• ${loser.actionText}\n: ${loser.impactScore}점`,
+      explanation: `정답: ${winner.actionText}\n설명: ${winner.explanation}`,
       penalty: 25,
       theme: "city",
     });
@@ -32,18 +31,15 @@ const generateRandomQuizzes = (roundCount: number = 10): QuizItem[] => {
 };
 
 export const useRandomQuiz = (totalRounds: number = 10) => {
-  // 스토어에서 함수와 상태를 가져옵니다.
   const startGame = useGameStore((state) => state.startGame);
   const quizzes = useGameStore((state) => state.quizzes);
   const waterLevel = useGameStore((state) => state.waterLevel);
 
-  // 훅이 실행될 때 한 번만 퀴즈를 생성하고 스토어에 세팅합니다.
   useEffect(() => {
     const newDynamicQuizzes = generateRandomQuizzes(totalRounds);
     startGame(newDynamicQuizzes, "random");
   }, [startGame, totalRounds]);
 
-  // Wrapper 컴포넌트가 화면을 그릴 때 필요한 정보만 딱 추려서 반환합니다.
   return {
     isReady: quizzes.length > 0,
     waterLevel,
