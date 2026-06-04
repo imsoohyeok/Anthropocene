@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import useSound from "use-sound";
 import { useQuizFeedback } from "@/hooks/useQuizFeedback";
 import { useGameStore } from "@/store/useGameStore";
-import FeedbackScale from "./FeedbackScale";
+import FeedbackScale from "./FeedbackBattery";
 import GameOverScreen from "./GameOverScreen";
 import GameClearScreen from "./GameClearScreen";
 import QuizRoom from "./QuizRoom";
