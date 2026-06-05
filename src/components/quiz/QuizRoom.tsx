@@ -5,11 +5,9 @@ import Image from "next/image";
 import HologramCard from "./HologramCard";
 import { THEME_CONFIG, SPOTLIGHT_COORDS } from "@/data/QuizRoom";
 import { QuizRoomProps, SpotlightTarget } from "@/types/quiz";
-import { useGameStore } from "@/store/useGameStore";
 
 export default function QuizRoom({ quiz, onAnswer }: QuizRoomProps) {
   const config = THEME_CONFIG[quiz.theme];
-  const overloadRate = useGameStore((state) => state.overloadRate);
 
   const targetObj = quiz.highlightObject
     ? SPOTLIGHT_COORDS[quiz.highlightObject as SpotlightTarget]
@@ -43,21 +41,6 @@ export default function QuizRoom({ quiz, onAnswer }: QuizRoomProps) {
             fill
             priority
             className="object-cover"
-          />
-
-          {/* 영구적 엠비언스: 수치가 높을수록 방 전체가 붉게 달아오름 */}
-          <div
-            className="absolute inset-0 pointer-events-none transition-colors duration-1000"
-            style={{
-              backgroundColor: `rgba(220, 38, 38, ${overloadRate * 0.004})`,
-            }}
-          />
-
-          <div
-            className="absolute inset-0"
-            style={{
-              background: `radial-gradient(circle at center, ${config.glow} 0%, transparent 80%)`,
-            }}
           />
         </motion.div>
       </AnimatePresence>
