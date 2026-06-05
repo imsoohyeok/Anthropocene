@@ -31,9 +31,6 @@ export default function GameClearScreen({
         }}
       />
 
-      {/* 시네마틱 노이즈 */}
-      <div className="absolute inset-0 pointer-events-none bg-[url('/images/noise.png')] opacity-[0.03] mix-blend-overlay z-0" />
-
       {/* 메인 콘텐츠 */}
       <div className="relative z-10 flex flex-col items-center text-center px-6 w-full max-w-2xl">
         <motion.div
