@@ -4,10 +4,13 @@ import { motion } from "framer-motion";
 import { GameClearScreenProps } from "@/types/GameClearScreen";
 
 export default function GameClearScreen({
-  score,
+  correctCount,
+  totalQuizzes,
   overloadRate,
   onExit,
 }: GameClearScreenProps) {
+  const energySaveRate = Math.max(100 - overloadRate, 0);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -52,20 +55,30 @@ export default function GameClearScreen({
           className="w-full flex justify-center gap-12 md:gap-24 mb-16 p-8 border border-blue-500/20 bg-blue-950/20 backdrop-blur-xl rounded-3xl shadow-[0_0_40px_rgba(37,99,235,0.1)]"
         >
           <div className="flex flex-col items-center">
+            <div className="flex items-center gap-1.5 text-[11px] font-bold tracking-[0.2em] mb-2 px-3 py-0.5 bg-black/40 text-zinc-500 rounded-sm shadow-[0_0_10px_rgba(239,68,68,0.1)]">
+              정답
+              <span className="text-zinc-200">{correctCount}</span>
+              <span className="text-zinc-600">/ {totalQuizzes}</span>
+            </div>
+
             <span className="text-zinc-400 text-sm font-bold tracking-[0.2em] uppercase mb-2">
               에너지 절약률
             </span>
             <div className="text-5xl font-black text-blue-400 tabular-nums">
-              {score}
+              {energySaveRate}
               <span className="text-3xl">%</span>
             </div>
           </div>
-          <div className="w-px bg-blue-500/20" /> {/* 구분선 */}
-          <div className="flex flex-col items-center">
+
+          <div className="w-px bg-blue-500/20" />
+
+          <div className="flex flex-col items-center relative">
+            <div className="h-5 mb-2 opacity-0 pointer-events-none">spacer</div>
+
             <span className="text-zinc-400 text-sm font-bold tracking-[0.2em] uppercase mb-2">
               환경 오염률
             </span>
-            <div className="text-5xl font-black text-white tabular-nums">
+            <div className="text-5xl font-black text-red-400 tabular-nums drop-shadow-[0_0_15px_rgba(239,68,68,0.3)]">
               {overloadRate}
               <span className="text-3xl">%</span>
             </div>

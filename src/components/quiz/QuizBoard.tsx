@@ -78,11 +78,10 @@ export default function QuizBoard() {
     return <GameOverScreen resetGame={resetGame} onExit={exitToMenu} />;
 
   if (isFinished) {
-    const accuracyRate = Math.round((score / quizzes.length) * 100);
-
     return (
       <GameClearScreen
-        score={accuracyRate}
+        correctCount={score}
+        totalQuizzes={quizzes.length}
         overloadRate={overloadRate}
         onExit={exitToMenu}
       />
