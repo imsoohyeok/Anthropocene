@@ -1,5 +1,6 @@
 export interface GameClearScreenProps {
-  score: number;
+  correctCount: number;
+  totalQuizzes: number;
   overloadRate: number;
   onExit: () => void;
 }
