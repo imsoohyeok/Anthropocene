@@ -1,12 +1,12 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { FlashbangProps } from "@/types/FlashbangOverlay";
+import { FlashBangProps } from "@/types/FlashBangOverlay";
 
-export default function FlashbangOverlay({
+export default function FlashBangOverlay({
   isWarping,
   isReturning,
-}: FlashbangProps) {
+}: FlashBangProps) {
   return (
     <AnimatePresence>
       {/* 두 상태 중 하나라도 활성 상태라면 렌더링 */}

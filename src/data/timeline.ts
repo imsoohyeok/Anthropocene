@@ -14,7 +14,7 @@ export const timelineData: TimelineData[] = [
     label: "대 가속기",
     metrics: { co2: 2380, temp: 0.152, seaLevel: -92 },
     description:
-      "제2차 세계대전 이후 생산과 소비가 폭발하며 지구의 지표들이 요동치기 시작합니다.",
+      "제2차 세계대전 이후 생산과 소비가 폭발하며 지구가 급변하기 시작합니다.",
     visuals: { hazardLevel: 0.3 },
   },
   {
@@ -29,7 +29,7 @@ export const timelineData: TimelineData[] = [
     label: "선택의 기로",
     metrics: { co2: 7500, temp: 2.5, seaLevel: 200 },
     description:
-      "지금의 추세가 이어진다면, 우리가 알던 해안선은 지도에서 영원히 사라질 것입니다.",
+      "지금의 추세가 이어진다면, 지구의 모습은 점점 돌이킬 수 없을 것입니다.",
     visuals: { hazardLevel: 1.0 },
   },
 ];
