@@ -22,7 +22,9 @@ export default function DashboardOverlay({
             {label}
           </p>
         </div>
-        <p className="text-sm mb:text-lg text-zinc-500 leading-relaxed font-light">
+        <p
+          className={`text-sm mb:text-lg leading-relaxed font-light ${year <= 2020 ? "text-zinc-300" : "text-zinc-700"}`}
+        >
           {description}
         </p>
       </div>
@@ -60,7 +62,7 @@ export default function DashboardOverlay({
         <button
           onClick={onEnterQuiz}
           disabled={!isEndGame}
-          className="group relative overflow-hidden inline-block px-8 py-3 bg-red-600 text-white font-bold rounded-full hover:bg-red-500 transition-all shadow-lg hover:shadow-red-500/50 text-lg tracking-normal w-auto min-w-50 text-center cursor-pointer"
+          className="group relative overflow-hidden inline-block px-8 py-3 bg-red-500 text-white font-bold rounded-full hover:bg-red-400 transition-all shadow-lg hover:shadow-red-500/50 text-lg tracking-normal w-auto min-w-50 text-center cursor-pointer"
         >
           {/* 버튼 호버 시 빛나는 효과 애니메이션 */}
           <div className="absolute inset-0 w-full h-full bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />
