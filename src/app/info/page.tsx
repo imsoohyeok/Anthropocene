@@ -19,11 +19,6 @@ export default function InfoPage() {
       {/* 상단 HUD 레이어 */}
       <div className="relative z-10 max-w-7xl mx-auto mb-16 flex justify-between items-center">
         <div className="space-y-1">
-          <div className="inline-block px-3 py-0.5 border border-red-500/30 bg-red-950/20 rounded-sm mb-2">
-            <p className="text-xs font-bold text-red-500 uppercase tracking-[0.3em]">
-              System Info
-            </p>
-          </div>
           <h1 className="text-4xl font-black text-white tracking-tighter uppercase">
             데이터 정보 및 출처
           </h1>
@@ -55,9 +50,9 @@ export default function InfoPage() {
           >
             {/* 카테고리 헤더 */}
             <div className="flex items-center gap-4">
-              <h2 className="text-2xl font-black text-zinc-100 tracking-tight shrink-0" />
-              {category}
-
+              <h2 className="text-2xl font-black text-zinc-100 tracking-tight shrink-0">
+                {category}
+              </h2>
               <div className="w-full h-px bg-zinc-800" />
             </div>
 
@@ -78,7 +73,7 @@ export default function InfoPage() {
                         rel="noopener noreferrer"
                         className="text-red-500 hover:text-red-400 hover:underline transition-colors"
                       >
-                        {item.infoName} (공식 사이트 바로가기)
+                        {item.infoName}
                       </a>
                     ) : (
                       <span>{item.infoName}</span>
