@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTimeline } from "@/hooks/useTimeLine";
@@ -87,6 +88,15 @@ export default function Home() {
                 transition={{ duration: 0.5 }}
                 className="absolute inset-0 z-10 flex flex-col h-full pointer-events-none"
               >
+                <div className="absolute bottom-8 right-8 md:bottom-12 md:right-12 z-50 pointer-events-auto">
+                  <Link
+                    href="/info"
+                    className="flex items-center gap-2 px-4 py-2 border border-zinc-800 rounded-full bg-black/50 backdrop-blur-md text-zinc-400 hover:text-white hover:border-zinc-500 transition-all text-xs md:text-sm font-bold tracking-[0.2em] uppercase"
+                  >
+                    <span>정보 및 출처</span>
+                  </Link>
+                </div>
+
                 <div className="flex-1 flex flex-col justify-center w-full max-w-4xl mx-auto px-4">
                   <DashboardOverlay
                     year={year}
