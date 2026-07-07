@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import useSound from "use-sound";
 import { useQuizFeedback } from "@/hooks/useQuizFeedback";
 import { useGameStore } from "@/store/useGameStore";
+import { useQuizAudio } from "@/hooks/useQuizAudio";
+
 import FeedbackScale from "./FeedbackBattery";
 import GameOverScreen from "./GameOverScreen";
 import GameClearScreen from "./GameClearScreen";
@@ -21,18 +22,22 @@ export default function QuizBoard() {
     submitAnswer,
     resetGame,
     exitToMenu,
+    mode,
   } = useGameStore();
+
   const currentQuiz = quizzes?.[currentIndex];
   const { feedback, onOptionClick, onNextClick } = useQuizFeedback(
     currentQuiz?.explanation || "",
-    submitAnswer,
+    submitAnswer
   );
 
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const [isFlashing, setIsFlashing] = useState(false);
 
-  const [playCorrect] = useSound("/sounds/correct.mp3", { volume: 0.7 });
-  const [playWrong] = useSound("/sounds/wrong.mp3", { volume: 1.0 });
+  const { playCorrect, playWrong, playClick } = useQuizAudio(
+    overloadRate,
+    mode
+  );
 
   useEffect(() => {
     let modalTimer: NodeJS.Timeout;
@@ -90,7 +95,7 @@ export default function QuizBoard() {
 
   return (
     <main className="relative w-full h-screen bg-black overflow-hidden">
-      {/* HUD 레이어 생략 (기존과 동일) */}
+      {/* HUD 레이어 */}
       <div className="absolute top-0 left-0 w-full z-50 p-8 pointer-events-none">
         <div className="max-w-7xl mx-auto flex justify-between items-start pointer-events-auto">
           <div className="space-y-1">
@@ -137,7 +142,7 @@ export default function QuizBoard() {
         )}
       </AnimatePresence>
 
-      {/* 피드백 모달 (z-[100]) */}
+      {/* 피드백 모달 */}
       <AnimatePresence>
         {showFeedbackModal && feedback && (
           <motion.div
@@ -162,8 +167,12 @@ export default function QuizBoard() {
               <p className="whitespace-pre-wrap text-zinc-300 leading-relaxed mb-8 ">
                 {feedback.text}
               </p>
+
               <button
-                onClick={onNextClick}
+                onClick={() => {
+                  playClick();
+                  onNextClick();
+                }}
                 className="w-full py-4 bg-white text-black font-black uppercase tracking-widest hover:bg-mist-300 transition-colors"
               >
                 다음 문제
