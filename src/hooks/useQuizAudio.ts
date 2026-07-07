@@ -11,8 +11,8 @@ export function useQuizAudio(overloadRate: number, mode: GameMode) {
   const [playWrong] = useSound("/sounds/laserLarge_001.ogg", {
     volume: 0.3,
   });
-  const [playClick] = useSound("/sounds/impactMetal_002.ogg", {
-    volume: 0.5,
+  const [playClick] = useSound("/sounds/drop_003.ogg", {
+    volume: 0.2,
   });
 
   const normalBgmPath =
@@ -21,14 +21,14 @@ export function useQuizAudio(overloadRate: number, mode: GameMode) {
       : "/sounds/jonasblakewood-energetic-513175.mp3"; // 무작위 선택지 모드
 
   const [playNormal, { stop: stopNormal }] = useSound(normalBgmPath, {
-    volume: 0.08,
+    volume: 0.07,
     loop: true,
   });
 
   const [playDanger, { stop: stopDanger }] = useSound(
     "/sounds/kulakovka-hard-cyberpunk-281149.mp3",
     {
-      volume: 0.08,
+      volume: 0.07,
       loop: true,
     }
   );
