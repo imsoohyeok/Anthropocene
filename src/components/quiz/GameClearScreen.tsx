@@ -1,6 +1,8 @@
 "use client";
 
+import { useEffect } from "react";
 import { motion } from "framer-motion";
+import useSound from "use-sound";
 import { GameClearScreenProps } from "@/types/GameClearScreen";
 
 export default function GameClearScreen({
@@ -10,6 +12,15 @@ export default function GameClearScreen({
   onExit,
 }: GameClearScreenProps) {
   const energySaveRate = Math.max(100 - overloadRate, 0);
+
+  const [playGameClear] = useSound(
+    "/sounds/freesound_community-success-fanfare-trumpets-6185.mp3",
+    { volume: 0.3 }
+  );
+
+  useEffect(() => {
+    playGameClear();
+  }, [playGameClear]);
 
   return (
     <motion.div

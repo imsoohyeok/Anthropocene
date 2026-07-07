@@ -34,9 +34,12 @@ export default function QuizBoard() {
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const [isFlashing, setIsFlashing] = useState(false);
 
+  const isEnded = isGameOver || isFinished;
+
   const { playCorrect, playWrong, playClick } = useQuizAudio(
     overloadRate,
-    mode
+    mode,
+    isEnded
   );
 
   useEffect(() => {
