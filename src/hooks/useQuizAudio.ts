@@ -4,15 +4,19 @@ import { useEffect } from "react";
 import useSound from "use-sound";
 import { GameMode } from "@/types/GameStore";
 
-export function useQuizAudio(overloadRate: number, mode: GameMode) {
+export function useQuizAudio(
+  overloadRate: number,
+  mode: GameMode,
+  isEnded: boolean
+) {
   const [playCorrect] = useSound("/sounds/forceField_002.ogg", {
-    volume: 0.3,
+    volume: 0.2,
   });
   const [playWrong] = useSound("/sounds/laserLarge_001.ogg", {
-    volume: 0.3,
+    volume: 0.2,
   });
   const [playClick] = useSound("/sounds/drop_003.ogg", {
-    volume: 0.2,
+    volume: 0.1,
   });
 
   const normalBgmPath =
@@ -37,22 +41,28 @@ export function useQuizAudio(overloadRate: number, mode: GameMode) {
   const isDanger = overloadRate >= 70;
 
   useEffect(() => {
-    if (isDanger) {
-      // 70% 이상일 때: 일반 BGM을 끄고 위험 BGM을 켭니다.
+    // 🚨 1순위: 게임이 종료되었다면 모든 배경음악과 긴장감 사운드를 즉시 정지하고 탈출(return)
+    if (isEnded) {
       stopNormal();
-      playDanger();
-    } else {
-      // 70% 미만일 때: 위험 BGM을 끄고 일반 BGM을 켭니다.
       stopDanger();
-      playNormal();
+      return;
     }
 
-    // 컴포넌트 언마운트(게임오버, 클리어, 메뉴 이동) 시 모든 사운드 강제 정지
+    // 2순위: 게임 진행 중일 때의 모드별 음악 스위칭
+    if (isDanger) {
+      stopNormal(); // 일반 노래 끄고
+      playDanger(); // 위험 노래 켜고
+    } else {
+      stopDanger();
+      playNormal(); // 일반 노래 켜기
+    }
+
+    // 컴포넌트가 완전히 언마운트될 때의 최종 안전장치
     return () => {
       stopNormal();
       stopDanger();
     };
-  }, [isDanger, playNormal, stopNormal, playDanger, stopDanger]);
+  }, [isEnded, isDanger, playNormal, playDanger, stopNormal, stopDanger]);
 
   return { playCorrect, playWrong, playClick };
 }

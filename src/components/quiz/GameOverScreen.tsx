@@ -1,12 +1,23 @@
 "use client";
 
+import { useEffect } from "react";
 import { motion } from "framer-motion";
+import useSound from "use-sound";
 import { GameOverScreenProps } from "@/types/GameOverScreen";
 
 export default function GameOverScreen({
   resetGame,
   onExit,
 }: GameOverScreenProps) {
+  const [playGameOver] = useSound(
+    "/sounds/universfield-game-over-deep-male-voice-clip-352695.mp3",
+    { volume: 0.3 }
+  );
+
+  useEffect(() => {
+    playGameOver();
+  }, [playGameOver]);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}

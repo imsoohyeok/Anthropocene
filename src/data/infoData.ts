@@ -90,9 +90,9 @@ export const infoData: infoItem[] = [
   {
     id: 12,
     category: "음악 출처",
-    content: "UI 마이크로 인터랙션 및 환경 효과음",
+    content: "UI 마이크로 인터랙션 및 효과음",
     infoName: "https://kenney.nl",
-    infoUrl: "https://kenney.nl/assets/sci-fi-sounds",
+    infoUrl: "https://kenney.nl/assets/category:Audio",
   },
   {
     id: 13,
@@ -119,5 +119,23 @@ export const infoData: infoItem[] = [
       "Pixabay Sound Effects (Royalty-Free) - Kulakovka의 Hard Cyberpunk",
     infoUrl:
       "https://pixabay.com/ko/users/kulakovka-47183261/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=281149",
+  },
+  {
+    id: 16,
+    category: "음악 출처",
+    content: "미니게임 게임 클리어 효과음",
+    infoName:
+      "Pixabay Sound Effects (Royalty-Free) - freesound_community의 Success Fanfare Turmpets",
+    infoUrl:
+      "https://pixabay.com/ko/users/freesound_community-46691455/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=6185",
+  },
+  {
+    id: 17,
+    category: "음악 출처",
+    content: "미니게임 게임 오버 효과음",
+    infoName:
+      "Pixabay Sound Effects (Royalty-Free) - Universfield의 Game Over Deep Male Voice Clip",
+    infoUrl:
+      "https://pixabay.com/ko/users/universfield-28281460/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=352695",
   },
 ];
