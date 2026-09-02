@@ -12,9 +12,35 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const title = "SavEnergy";
+const description =
+  "일상생활 속 에너지 절약 방법을 미니게임을 통해 알아보세요!";
+
 export const metadata: Metadata = {
-  title: "SavEnergy",
-  description: "일상생활 속 에너지 절약 방법을 미니게임을 통해 알아보세요!",
+  metadataBase: new URL("https://savenergy-inlife.vercel.app"),
+  title,
+  description,
+  keywords: [
+    "기후변화",
+    "에너지 절약",
+    "탄소중립",
+    "환경 교육",
+    "인터랙티브 웹",
+    "미니게임",
+  ],
+  openGraph: {
+    title,
+    description,
+    url: "/",
+    siteName: title,
+    locale: "ko_KR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+  },
   other: {
     google: "notranslate",
   },
