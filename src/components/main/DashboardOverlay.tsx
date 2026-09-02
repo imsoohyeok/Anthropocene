@@ -14,7 +14,7 @@ export default function DashboardOverlay({
     <div className="flex flex-col items-center justify-center min-h-screen p-4 pt-14 pb-28 sm:p-6 sm:pt-16 md:p-8 md:pt-20 md:pb-40">
       {/* 헤더 섹션 */}
       <div className="text-center mt-6 mb-6 md:mt-16 md:mb-10 max-w-3xl">
-        <h1 className="text-5xl sm:text-6xl md:text-9xl font-black tracking-tighter mb-2 md:mb-4 tabular-nums text-white drop-shadow-2xl">
+        <h1 className="text-5xl sm:text-6xl md:text-7xl font-black tracking-tighter mb-2 md:mb-4 tabular-nums text-white drop-shadow-2xl">
           {year}
         </h1>
         <div className="inline-block px-4 py-1 border border-red-500/50 bg-red-500/10 rounded-full mb-3 md:mb-6">
@@ -23,7 +23,7 @@ export default function DashboardOverlay({
           </p>
         </div>
         <p
-          className={`text-sm md:text-lg leading-relaxed font-light ${year <= 2020 ? "text-zinc-300" : "text-zinc-700"}`}
+          className={`text-sm leading-relaxed font-light ${year <= 2020 ? "text-zinc-300" : "text-zinc-700"}`}
         >
           {description}
         </p>
