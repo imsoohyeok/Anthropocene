@@ -46,7 +46,7 @@ export default function QuizRoom({ quiz, onAnswer }: QuizRoomProps) {
           </motion.div>
         </AnimatePresence>
 
-        {/* 스포트라이트 조명 레이어 */}
+        {/* 스포트라이트 조명 레이어: 모바일/태블릿에서는 배경이 확대되어 좌표가 화면 밖으로 벗어날 수 있어 숨김 처리 (데스크톱 lg 이상에서만 표시) */}
         <AnimatePresence mode="wait">
           {targetObj && (
             <motion.div
@@ -59,7 +59,7 @@ export default function QuizRoom({ quiz, onAnswer }: QuizRoomProps) {
                 transition: { duration: 0.5, ease: "easeIn" },
               }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute z-10 pointer-events-none rounded-full"
+              className="hidden lg:block absolute z-10 pointer-events-none rounded-full"
               style={{
                 top: targetObj.top,
                 left: targetObj.left,

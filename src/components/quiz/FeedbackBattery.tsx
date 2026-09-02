@@ -48,7 +48,7 @@ export default function FeedbackBattery({
               ? { duration: 3, repeat: Infinity, ease: "easeInOut" }
               : { duration: 0.5 }
         }
-        className={`relative w-52 h-48 rounded-xl border-2 flex flex-col items-center justify-center text-center backdrop-blur-md overflow-hidden transition-colors
+        className={`relative flex-1 min-w-0 h-36 sm:h-40 sm:w-48 sm:flex-none md:w-52 md:h-48 rounded-xl border-2 flex flex-col items-center justify-center text-center backdrop-blur-md overflow-hidden transition-colors
           ${
             isOverload
               ? "border-red-500 shadow-[0_0_30px_rgba(239,68,68,0.4)]"
@@ -78,9 +78,9 @@ export default function FeedbackBattery({
         )}
 
         {/* 텍스트 콘텐츠 (에너지 위에 띄워짐) */}
-        <div className="relative z-10 flex flex-col items-center px-4">
+        <div className="relative z-10 flex flex-col items-center px-2 md:px-4">
           <div
-            className={`px-3 py-1 mb-3 rounded-sm text-[10px] font-black tracking-widest uppercase border bg-black/60 backdrop-blur-sm ${
+            className={`px-2 py-0.5 mb-2 md:px-3 md:py-1 md:mb-3 rounded-sm text-[10px] font-black tracking-widest uppercase border bg-black/60 backdrop-blur-sm ${
               isIgnored
                 ? "text-zinc-500 border-zinc-700"
                 : isOptimized
@@ -92,7 +92,7 @@ export default function FeedbackBattery({
           </div>
 
           <span
-            className={`text-sm font-medium break-keep leading-snug ${isIgnored ? "text-zinc-600" : "text-white drop-shadow-md"}`}
+            className={`text-xs sm:text-sm font-medium break-keep leading-snug ${isIgnored ? "text-zinc-600" : "text-white drop-shadow-md"}`}
           >
             {option.text}
           </span>
@@ -107,7 +107,7 @@ export default function FeedbackBattery({
   };
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto flex items-center justify-center gap-12 mb-8">
+    <div className="relative w-full max-w-2xl mx-auto flex items-center justify-center gap-3 sm:gap-6 md:gap-12 mb-4 md:mb-8">
       {renderBatteryBox(keyA, optA)}
       {renderBatteryBox(keyB, optB)}
     </div>

@@ -59,7 +59,7 @@ export default function Home() {
         <IntroOverlay />
       </div>
 
-      <div className="md:fixed relative top-0 left-0 w-full h-screen overflow-hidden">
+      <div className="md:fixed relative top-0 left-0 w-full min-h-screen overflow-visible md:h-screen md:overflow-hidden">
         {/* 비주얼 레이어: 3D 배경 */}
         <div className="fixed inset-0 z-0">
           <MainScene hazardLevel={visuals.hazardLevel} co2={metrics.co2} />
@@ -88,7 +88,7 @@ export default function Home() {
                 transition={{ duration: 0.5 }}
                 className="absolute inset-0 z-10 flex flex-col h-full pointer-events-none"
               >
-                <div className="absolute bottom-8 right-8 md:bottom-12 md:right-12 z-50 pointer-events-auto">
+                <div className="absolute bottom-6 right-4 md:bottom-12 md:right-12 z-50 pointer-events-auto">
                   <Link
                     href="/info"
                     className="flex items-center gap-2 px-4 py-2 border border-zinc-800 rounded-full bg-black/50 backdrop-blur-md text-zinc-400 hover:text-white hover:border-zinc-500 transition-all text-xs md:text-sm font-bold tracking-[0.2em] uppercase"

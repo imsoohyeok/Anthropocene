@@ -28,18 +28,18 @@ export default function HologramCard({
       initial={{ y: 50, opacity: 0, rotateX: 20 }}
       animate={{ y: 0, opacity: 1, rotateX: 0 }}
       key={quiz.question}
-      className="relative p-8 rounded-2xl border bg-white/5 backdrop-blur-xl overflow-hidden"
+      className="relative p-5 sm:p-6 md:p-8 rounded-2xl border bg-white/5 backdrop-blur-xl overflow-hidden"
       style={{
         perspective: "1000px",
         borderColor: `${themeColor}4d`,
         boxShadow: `0 0 30px ${themeColor}26`,
       }}
     >
-      <p className="text-white text-xl md:text-2xl font-medium leading-snug mb-8 break-keep relative z-10">
+      <p className="text-white text-xl md:text-2xl font-medium leading-snug mb-5 md:mb-8 break-keep relative z-10">
         {quiz.question}
       </p>
 
-      <div className="grid gap-4 relative z-10">
+      <div className="grid gap-3 md:gap-4 relative z-10">
         {Object.entries(quiz.options).map(([key, option]) => {
           const currentOption = option as QuizOption;
 
@@ -79,7 +79,7 @@ export default function HologramCard({
                 setSelectedKey(key);
                 onAnswer(currentOption.isCorrect, quiz.penalty);
               }}
-              className="w-full p-4 rounded-xl border text-left text-white transition-colors group"
+              className="w-full p-3 md:p-4 rounded-xl border text-left text-white transition-colors group"
             >
               <span
                 className="inline-block w-8 font-bold group-hover:animate-pulse"

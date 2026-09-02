@@ -7,11 +7,11 @@ export default function YearController({ year, setYear }: YearControllerProps) {
   const presentPosition = ((presentYear - 1850) / (2100 - 1850)) * 100;
 
   return (
-    <div className="fixed bottom-0 left-0 w-full p-12 bg-linear-to-t from-black/80 to-transparent pointer-events-auto">
-      <div className="max-w-xl mx-auto px-4">
+    <div className="fixed bottom-0 left-0 w-full p-4 pb-6 sm:p-6 md:p-12 bg-linear-to-t from-black/80 to-transparent pointer-events-auto">
+      <div className="max-w-xl mx-auto px-2 sm:px-4">
         <div className="relative group">
           <div
-            className="absolute -top-10 left-0 -translate-x-1/2 px-2 py-1 bg-zinc-800 rounded text-[10px] font-mono text-zinc-300 opacity-0 group-hover:opacity-100 transition-opacity"
+            className="absolute -top-8 md:-top-10 left-0 -translate-x-1/2 px-2 py-1 bg-zinc-800 rounded text-[10px] font-mono text-zinc-300 opacity-0 group-hover:opacity-100 transition-opacity"
             style={{ left: `${((year - 1850) / (2100 - 1850)) * 100}%` }}
           >
             {year}
@@ -28,7 +28,7 @@ export default function YearController({ year, setYear }: YearControllerProps) {
           />
         </div>
 
-        <div className="relative w-full h-8 mt-4 text-[10px] font-mono text-zinc-500 uppercase tracking-widest pointer-events-none">
+        <div className="relative w-full h-8 mt-3 md:mt-4 text-[10px] font-mono text-zinc-500 uppercase tracking-widest pointer-events-none">
           <div className="absolute left-0 flex flex-col items-start gap-1">
             <span className="h-2 w-px bg-zinc-800"></span>
             <span>1850</span>
