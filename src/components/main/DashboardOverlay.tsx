@@ -11,26 +11,26 @@ export default function DashboardOverlay({
   const isEndGame = year >= 2090;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-8 pt-20 pb-40">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 pt-14 pb-28 sm:p-6 sm:pt-16 md:p-8 md:pt-20 md:pb-40">
       {/* 헤더 섹션 */}
-      <div className="text-center mt-16 mb-10 max-w-3xl">
-        <h1 className="text-7xl mb:text-9xl font-black tracking-tighter mb-4 tabular-nums text-white drop-shadow-2xl">
+      <div className="text-center mt-6 mb-6 md:mt-16 md:mb-10 max-w-3xl">
+        <h1 className="text-5xl sm:text-6xl md:text-9xl font-black tracking-tighter mb-2 md:mb-4 tabular-nums text-white drop-shadow-2xl">
           {year}
         </h1>
-        <div className="inline-block px-4 py-1 border border-red-500/50 bg-red-500/10 rounded-full mb-6">
+        <div className="inline-block px-4 py-1 border border-red-500/50 bg-red-500/10 rounded-full mb-3 md:mb-6">
           <p className="text-sm font-bold text-red-500 uppercase tracking-[0.3em]">
             {label}
           </p>
         </div>
         <p
-          className={`text-sm mb:text-lg leading-relaxed font-light ${year <= 2020 ? "text-zinc-300" : "text-zinc-700"}`}
+          className={`text-sm md:text-lg leading-relaxed font-light ${year <= 2020 ? "text-zinc-300" : "text-zinc-700"}`}
         >
           {description}
         </p>
       </div>
 
       {/* 메트릭 그리드 */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl pointer-events-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 md:gap-6 w-full max-w-6xl pointer-events-auto">
         <MetricCard
           label="이산화탄소 배출량"
           value={metrics.co2.toFixed(1)}
@@ -53,7 +53,7 @@ export default function DashboardOverlay({
 
       {/* 페이지 전환 버튼 */}
       <div
-        className={`mt-10 flex flex-col items-center justify-center w-full transition-all duration-1000 transform ${
+        className={`mt-6 md:mt-10 flex flex-col items-center justify-center w-full transition-all duration-1000 transform ${
           isEndGame
             ? "opacity-100 translate-y-0 pointer-events-auto"
             : "opacity-0 translate-y-10 pointer-events-none"
@@ -62,7 +62,7 @@ export default function DashboardOverlay({
         <button
           onClick={onEnterQuiz}
           disabled={!isEndGame}
-          className="group relative overflow-hidden inline-block px-8 py-3 bg-red-500 text-white font-bold rounded-full hover:bg-red-400 transition-all shadow-lg hover:shadow-red-500/50 text-lg tracking-normal w-auto min-w-50 text-center cursor-pointer"
+          className="group relative overflow-hidden inline-block px-6 py-2.5 md:px-8 md:py-3 bg-red-500 text-white font-bold rounded-full hover:bg-red-400 transition-all shadow-lg hover:shadow-red-500/50 text-base md:text-lg tracking-normal w-auto min-w-50 text-center cursor-pointer"
         >
           {/* 버튼 호버 시 빛나는 효과 애니메이션 */}
           <div className="absolute inset-0 w-full h-full bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />

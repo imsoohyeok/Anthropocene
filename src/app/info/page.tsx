@@ -17,9 +17,9 @@ export default function InfoPage() {
   return (
     <main className="min-h-screen bg-black text-zinc-300 p-8 md:p-16 relative overflow-hidden">
       {/* 상단 HUD 레이어 */}
-      <div className="relative z-10 max-w-7xl mx-auto mb-16 flex justify-between items-center">
+      <div className="relative z-10 max-w-7xl mx-auto mb-10 md:mb-16 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1">
-          <h1 className="text-4xl font-black text-white tracking-tighter uppercase">
+          <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tighter uppercase">
             데이터 정보 및 출처
           </h1>
         </div>
@@ -27,9 +27,9 @@ export default function InfoPage() {
         {/* 메인으로 돌아가기 버튼 */}
         <Link
           href="/"
-          className="group flex items-center gap-2 px-5 py-2.5 bg-zinc-900 border border-zinc-800 rounded-full hover:border-zinc-600 transition-colors"
+          className="group flex items-center justify-center gap-2 w-full sm:w-auto px-5 py-2.5 bg-zinc-900 border border-zinc-800 rounded-full hover:border-zinc-600 transition-colors"
         >
-          <span className="text-sm font-bold text-zinc-400 group-hover:text-white transition-colors">
+          <span className="whitespace-nowrap text-sm font-bold text-zinc-400 group-hover:text-white transition-colors">
             메인 대시보드로 돌아가기
           </span>
           <span className="text-zinc-600 transition-transform group-hover:translate-x-1">

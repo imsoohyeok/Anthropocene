@@ -15,7 +15,7 @@ export default function GameClearScreen({
 
   const [playGameClear] = useSound(
     "/sounds/freesound_community-success-fanfare-trumpets-6185.mp3",
-    { volume: 0.3 }
+    { volume: 0.3 },
   );
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export default function GameClearScreen({
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.8, delay: 1, ease: "easeOut" }}
-          className="w-full flex justify-center gap-12 md:gap-24 mb-16 p-8 border border-blue-500/20 bg-blue-950/20 backdrop-blur-xl rounded-3xl shadow-[0_0_40px_rgba(37,99,235,0.1)]"
+          className="w-full flex justify-center gap-6 sm:gap-10 md:gap-24 mb-10 md:mb-16 p-5 sm:p-6 md:p-8 border border-blue-500/20 bg-blue-950/20 backdrop-blur-xl rounded-3xl shadow-[0_0_40px_rgba(37,99,235,0.1)]"
         >
           <div className="flex flex-col items-center">
             <div className="flex items-center gap-1.5 text-[11px] font-bold tracking-[0.2em] mb-2 px-3 py-0.5 bg-black/40 text-zinc-500 rounded-sm shadow-[0_0_10px_rgba(239,68,68,0.1)]">
@@ -72,9 +72,9 @@ export default function GameClearScreen({
             <span className="text-zinc-400 text-sm font-bold tracking-[0.2em] uppercase mb-2">
               에너지 절약률
             </span>
-            <div className="text-5xl font-black text-blue-400 tabular-nums">
+            <div className="text-3xl sm:text-4xl md:text-5xl font-black text-blue-400 tabular-nums">
               {energySaveRate}
-              <span className="text-3xl">%</span>
+              <span className="text-xl sm:text-2xl md:text-3xl">%</span>
             </div>
           </div>
 
@@ -86,9 +86,9 @@ export default function GameClearScreen({
             <span className="text-zinc-400 text-sm font-bold tracking-[0.2em] uppercase mb-2">
               환경 오염률
             </span>
-            <div className="text-5xl font-black text-red-400 tabular-nums drop-shadow-[0_0_15px_rgba(239,68,68,0.3)]">
+            <div className="text-3xl sm:text-4xl md:text-5xl font-black text-red-400 tabular-nums drop-shadow-[0_0_15px_rgba(239,68,68,0.3)]">
               {overloadRate}
-              <span className="text-3xl">%</span>
+              <span className="text-xl sm:text-2xl md:text-3xl">%</span>
             </div>
           </div>
         </motion.div>
