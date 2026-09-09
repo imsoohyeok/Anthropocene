@@ -118,7 +118,11 @@ export default function QuizBoard() {
             </div>
           </div>
           <div className="text-right space-y-1 mt-6 sm:mt-8 md:mt-11">
-            <div className="text-2xl sm:text-3xl md:text-4xl font-black text-red-600 tabular-nums shadow-red-500/20 drop-shadow-lg">
+            <div
+              className="text-2xl sm:text-3xl md:text-4xl font-black text-red-600 tabular-nums shadow-red-500/20 drop-shadow-lg"
+              aria-live="polite"
+              aria-label={`환경 오염률 ${overloadRate}퍼센트`}
+            >
               {overloadRate}%
             </div>
           </div>
@@ -154,11 +158,19 @@ export default function QuizBoard() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="absolute inset-0 z-100 flex items-center justify-center bg-black/80 backdrop-blur-xl p-3 sm:p-6 pointer-events-auto"
+            role="alertdialog"
+            aria-modal="true"
+            aria-live="assertive"
+            aria-labelledby="quiz-feedback-title"
+            aria-describedby="quiz-feedback-text"
           >
             <div
               className={`w-full max-w-xl p-5 sm:p-8 md:p-10 rounded-2xl md:rounded-3xl border ${feedback.isCorrect ? "border-cyan-500 bg-cyan-950/20" : "border-red-500 bg-red-950/20"}`}
             >
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-black mb-3 md:mb-4 uppercase">
+              <h3
+                id="quiz-feedback-title"
+                className="text-2xl sm:text-3xl md:text-4xl font-black mb-3 md:mb-4 uppercase"
+              >
                 {feedback.isCorrect ? "정답" : "오답"}
               </h3>
 
@@ -167,7 +179,10 @@ export default function QuizBoard() {
                 isUserCorrect={feedback.isCorrect}
               />
 
-              <p className="whitespace-pre-wrap text-zinc-300 leading-relaxed mb-5 md:mb-8 ">
+              <p
+                id="quiz-feedback-text"
+                className="whitespace-pre-wrap text-zinc-300 leading-relaxed mb-5 md:mb-8 "
+              >
                 {feedback.text}
               </p>
 
