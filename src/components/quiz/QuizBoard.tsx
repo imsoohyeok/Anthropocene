@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useQuizFeedback } from "@/hooks/useQuizFeedback";
 import { useGameStore } from "@/store/useGameStore";
@@ -33,6 +33,14 @@ export default function QuizBoard() {
 
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const [isFlashing, setIsFlashing] = useState(false);
+  const nextButtonRef = useRef<HTMLButtonElement>(null);
+
+  // 피드백 모달이 열리면 포커스를 모달 안(다음 문제 버튼)으로 이동
+  useEffect(() => {
+    if (showFeedbackModal) {
+      nextButtonRef.current?.focus();
+    }
+  }, [showFeedbackModal]);
 
   const isEnded = isGameOver || isFinished;
 
@@ -98,39 +106,42 @@ export default function QuizBoard() {
 
   return (
     <main className="relative w-full h-screen bg-black overflow-hidden">
-      {/* HUD 레이어 */}
-      <div className="absolute top-0 left-0 w-full z-50 p-4 sm:p-6 md:p-8 pointer-events-none">
-        <div className="max-w-7xl mx-auto flex justify-between items-start pointer-events-auto">
-          <div className="space-y-1">
-            <div className="mb-4 flex items-center gap-6">
-              <button
-                onClick={exitToMenu}
-                className="text-zinc-500 hover:text-white transition-colors text-sm font-black tracking-[0.2em] uppercase"
+      {/* 피드백 모달이 열려있는 동안 배경 콘텐츠는 포커스/상호작용 불가 처리 (모달 밖으로 Tab 이동 방지) */}
+      <div inert={showFeedbackModal}>
+        {/* HUD 레이어 */}
+        <div className="absolute top-0 left-0 w-full z-50 p-4 sm:p-6 md:p-8 pointer-events-none">
+          <div className="max-w-7xl mx-auto flex justify-between items-start pointer-events-auto">
+            <div className="space-y-1">
+              <div className="mb-4 flex items-center gap-6">
+                <button
+                  onClick={exitToMenu}
+                  className="text-zinc-500 hover:text-white transition-colors text-sm font-black tracking-[0.2em] uppercase"
+                >
+                  모드 선택
+                </button>
+              </div>
+              <div className="text-xl sm:text-2xl md:text-3xl font-black text-zinc-600 tracking-tighter">
+                PHASE {currentIndex + 1}{" "}
+                <span className="text-zinc-600 ml-2 text-sm sm:text-base md:text-xl">
+                  / {quizzes.length}
+                </span>
+              </div>
+            </div>
+            <div className="text-right space-y-1 mt-6 sm:mt-8 md:mt-11">
+              <div
+                className="text-2xl sm:text-3xl md:text-4xl font-black text-red-600 tabular-nums shadow-red-500/20 drop-shadow-lg"
+                aria-live="polite"
+                aria-label={`환경 오염률 ${overloadRate}퍼센트`}
               >
-                모드 선택
-              </button>
-            </div>
-            <div className="text-xl sm:text-2xl md:text-3xl font-black text-zinc-600 tracking-tighter">
-              PHASE {currentIndex + 1}{" "}
-              <span className="text-zinc-600 ml-2 text-sm sm:text-base md:text-xl">
-                / {quizzes.length}
-              </span>
-            </div>
-          </div>
-          <div className="text-right space-y-1 mt-6 sm:mt-8 md:mt-11">
-            <div
-              className="text-2xl sm:text-3xl md:text-4xl font-black text-red-600 tabular-nums shadow-red-500/20 drop-shadow-lg"
-              aria-live="polite"
-              aria-label={`환경 오염률 ${overloadRate}퍼센트`}
-            >
-              {overloadRate}%
+                {overloadRate}%
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* 메인 3D 시네마틱 룸 */}
-      <QuizRoom quiz={currentQuiz} onAnswer={onOptionClick} />
+        {/* 메인 3D 시네마틱 룸 */}
+        <QuizRoom quiz={currentQuiz} onAnswer={onOptionClick} />
+      </div>
 
       {/* 정답(or 오답) 시 플래시 */}
       <AnimatePresence>
@@ -187,6 +198,7 @@ export default function QuizBoard() {
               </p>
 
               <button
+                ref={nextButtonRef}
                 onClick={() => {
                   playClick();
                   onNextClick();
