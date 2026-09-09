@@ -49,6 +49,30 @@ describe("useQuizFeedback", () => {
     expect(result.current.feedback).toBeNull();
   });
 
+  it("다음 문제 버튼 광클(같은 클로저로 onNextClick 중복 호출)해도 handleAnswer는 한 번만 실행된다", () => {
+    // AnimatePresence exit 애니메이션 중 버튼이 잠깐 더 남아있어, 같은 렌더의
+    // onNextClick이 연속으로 여러 번 호출되는 상황을 재현한다.
+    const handleAnswer = vi.fn();
+    const { result } = renderHook(() =>
+      useQuizFeedback("설명 텍스트", handleAnswer),
+    );
+
+    act(() => {
+      result.current.onOptionClick(true, 25);
+    });
+
+    const staleOnNextClick = result.current.onNextClick;
+
+    act(() => {
+      staleOnNextClick();
+      staleOnNextClick();
+      staleOnNextClick();
+    });
+
+    expect(handleAnswer).toHaveBeenCalledTimes(1);
+    expect(handleAnswer).toHaveBeenCalledWith(true, 25);
+  });
+
   it("feedback이 없는 상태에서 onNextClick을 눌러도 아무 일도 일어나지 않는다", () => {
     const handleAnswer = vi.fn();
     const { result } = renderHook(() =>
