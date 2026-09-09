@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import useSound from "use-sound";
 import { GameClearScreenProps } from "@/types/GameClearScreen";
@@ -18,9 +18,19 @@ export default function GameClearScreen({
     { volume: 0.3 },
   );
 
+  // 버튼은 opacity:0으로 시작해 delay 1.5s 뒤에야 나타나는데, 그 전에도 클릭은 가능한
+  // 상태라 이전 화면에서 이어진 광클이 안 보이는 버튼을 눌러버릴 수 있다.
+  // 버튼이 실제로 보이기 시작하는 시점까지는 클릭을 막아둔다.
+  const [canInteract, setCanInteract] = useState(false);
+
   useEffect(() => {
     playGameClear();
   }, [playGameClear]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setCanInteract(true), 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <motion.div
@@ -101,7 +111,8 @@ export default function GameClearScreen({
         >
           <button
             onClick={onExit}
-            className="py-4 px-12 bg-blue-600 text-white font-black tracking-widest rounded-full hover:bg-blue-500 hover:scale-105 hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] transition-all duration-300"
+            disabled={!canInteract}
+            className="py-4 px-12 bg-blue-600 text-white font-black tracking-widest rounded-full hover:bg-blue-500 hover:scale-105 hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] transition-all duration-300 disabled:pointer-events-none"
           >
             다른 모드 즐기기
           </button>
