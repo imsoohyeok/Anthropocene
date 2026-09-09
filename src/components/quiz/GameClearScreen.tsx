@@ -63,7 +63,7 @@ export default function GameClearScreen({
           className="w-full flex justify-center gap-6 sm:gap-10 md:gap-24 mb-10 md:mb-16 p-5 sm:p-6 md:p-8 border border-blue-500/20 bg-blue-950/20 backdrop-blur-xl rounded-3xl shadow-[0_0_40px_rgba(37,99,235,0.1)]"
         >
           <div className="flex flex-col items-center">
-            <div className="flex items-center gap-1.5 text-[11px] font-bold tracking-[0.2em] mb-2 px-3 py-0.5 bg-black/40 text-zinc-500 rounded-sm shadow-[0_0_10px_rgba(239,68,68,0.1)]">
+            <div className="flex items-center gap-1.5 text-[11px] font-bold tracking-[0.2em] mb-2 px-3 py-0.5 text-zinc-500">
               정답
               <span className="text-zinc-200">{correctCount}</span>
               <span className="text-zinc-600">/ {totalQuizzes}</span>
