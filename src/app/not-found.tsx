@@ -16,10 +16,7 @@ export default function NotFound() {
         <h1 className="text-8xl md:text-9xl font-black text-red-600 tracking-tighter drop-shadow-[0_0_30px_rgba(220,38,38,0.6)]">
           404
         </h1>
-        <p className="mt-4 text-xl md:text-2xl text-zinc-200 font-medium tracking-tight">
-          궤도를 이탈했습니다
-        </p>
-        <p className="mt-2 text-zinc-500 text-sm md:text-base tracking-wide">
+        <p className="mt-4 text-zinc-500 text-sm md:text-base tracking-wide">
           요청하신 페이지가 존재하지 않거나 이동되었습니다.
         </p>
 
@@ -27,7 +24,7 @@ export default function NotFound() {
           href="/"
           className="mt-10 inline-block px-8 py-3 bg-red-500 text-white font-bold rounded-full hover:bg-red-400 transition-all shadow-lg hover:shadow-red-500/50 text-base tracking-widest"
         >
-          지구로 귀환하기
+          메인페이지로 돌아가기
         </Link>
       </div>
     </main>
