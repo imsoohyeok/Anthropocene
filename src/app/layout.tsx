@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -17,7 +18,7 @@ const description =
   "일상생활 속 에너지 절약 방법을 미니게임을 통해 알아보세요!";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://savenergy-inlife.vercel.app"),
+  metadataBase: new URL(SITE_URL),
   title,
   description,
   keywords: [
