@@ -2,11 +2,11 @@
 
 import QuizBoard from "@/components/quiz/QuizBoard";
 import OverloadOverlay from "./OverloadOverlay";
-import { dummyQuizzes } from "@/data/QuizData";
+import { scenarioQuizzes } from "@/data/QuizData";
 import { useScenarioQuiz } from "@/hooks/useScenarioQuiz";
 
 export default function ScenarioQuizWrapper() {
-  const { isReady, overloadRate } = useScenarioQuiz(dummyQuizzes);
+  const { isReady, overloadRate } = useScenarioQuiz(scenarioQuizzes);
 
   if (!isReady) return <div className="min-h-screen bg-black" />;
 
