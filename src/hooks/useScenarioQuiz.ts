@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useGameStore } from "@/store/useGameStore";
 import { QuizItem } from "@/types/quiz";
 
-const shuffleArray = <T>(array: T[]): T[] => {
+export const shuffleArray = <T>(array: T[]): T[] => {
   const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
