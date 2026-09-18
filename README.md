@@ -57,8 +57,9 @@
 | 3D / Animation | Three.js, @react-three/fiber, @react-three/drei, @react-three/postprocessing, GSAP, Framer Motion |
 | 상태 관리 | Zustand |
 | 사운드 | use-sound |
+| 테스트 | Vitest, React Testing Library |
 | 코드 품질 | ESLint, Prettier, Husky + lint-staged |
-| CI/CD | GitHub Actions (Lint · Build · Lighthouse CI) |
+| CI/CD | GitHub Actions (Lint · Test · Build · Lighthouse CI) |
 | 배포 | Vercel |
 
 ---
@@ -70,14 +71,22 @@ src/
 ├─ app/                  # Next.js App Router 페이지
 │  ├─ page.tsx           # 메인 대시보드 (/)
 │  ├─ quiz/page.tsx      # 퀴즈 미니게임 (/quiz)
-│  └─ info/page.tsx      # 데이터 출처 (/info)
-├─ components/           # UI 컴포넌트
+│  ├─ info/page.tsx      # 데이터 출처 (/info)
+│  ├─ not-found.tsx      # 404 페이지
+│  ├─ error.tsx          # 에러 바운더리
+│  ├─ icon.tsx           # 파비콘 (동적 생성)
+│  ├─ opengraph-image.tsx # OG 이미지 (동적 생성)
+│  ├─ robots.ts          # robots.txt
+│  └─ sitemap.ts         # sitemap.xml
+├─ components/           # UI 컴포넌트 (*.test.tsx 콜로케이트)
 │  ├─ animation/         # 인트로, 카메라 워크, 파티클 등 연출 컴포넌트
 │  ├─ main/              # 메인 대시보드 UI (지표 카드, 연도 슬라이더 등)
-│  └─ quiz/              # 퀴즈 미니게임 UI (홀로그램 카드, 피드백, 결과 화면 등)
+│  ├─ quiz/              # 퀴즈 미니게임 UI (홀로그램 카드, 피드백, 결과 화면 등)
+│  └─ info/              # 정보 페이지 애니메이션 컴포넌트
 ├─ data/                 # 정적 데이터 (퀴즈 문항, 타임라인, 출처, 액션 데이터)
-├─ hooks/                # 커스텀 훅 (스크롤 연동, 퀴즈 엔진, 오디오 등)
+├─ hooks/                # 커스텀 훅 (*.test.ts 콜로케이트)
 ├─ store/                # Zustand 전역 상태 (게임 진행, 인트로 단계)
+├─ lib/                  # 공통 상수/유틸 (배포 URL 등)
 └─ types/                # 도메인별 타입 정의
 ```
 
@@ -103,6 +112,7 @@ npm run dev
 npm run build   # 프로덕션 빌드
 npm run start   # 빌드 결과 실행
 npm run lint    # ESLint 검사
+npm run test    # Vitest 유닛테스트 실행
 ```
 
 ---
