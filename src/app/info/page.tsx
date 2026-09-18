@@ -1,9 +1,7 @@
 // src/app/info/page.tsx
-"use client";
-
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { infoData, infoItem } from "@/data/infoData";
+import AnimatedSection from "@/components/info/AnimatedSection";
 
 export default function InfoPage() {
   const groupedInfo = infoData.reduce(
@@ -41,11 +39,9 @@ export default function InfoPage() {
       {/* 메인 콘텐츠 레이어 */}
       <div className="relative z-10 max-w-7xl mx-auto space-y-12">
         {Object.entries(groupedInfo).map(([category, items], groupIndex) => (
-          <motion.section
+          <AnimatedSection
             key={category}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: groupIndex * 0.1 }}
+            index={groupIndex}
             className="space-y-6"
           >
             {/* 카테고리 헤더 */}
@@ -82,7 +78,7 @@ export default function InfoPage() {
                 </div>
               ))}
             </div>
-          </motion.section>
+          </AnimatedSection>
         ))}
       </div>
 

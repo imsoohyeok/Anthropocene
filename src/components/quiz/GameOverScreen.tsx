@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import useSound from "use-sound";
 import { GameOverScreenProps } from "@/types/GameOverScreen";
@@ -11,12 +11,22 @@ export default function GameOverScreen({
 }: GameOverScreenProps) {
   const [playGameOver] = useSound(
     "/sounds/universfield-game-over-deep-male-voice-clip-352695.mp3",
-    { volume: 0.3 }
+    { volume: 0.3 },
   );
+
+  // 버튼은 opacity:0으로 시작해 delay 1.2s 뒤에야 나타나는데, 그 전에도 클릭은 가능한
+  // 상태라 이전 화면에서 이어진 광클이 안 보이는 버튼을 눌러버릴 수 있다.
+  // 버튼이 실제로 보이기 시작하는 시점까지는 클릭을 막아둔다.
+  const [canInteract, setCanInteract] = useState(false);
 
   useEffect(() => {
     playGameOver();
   }, [playGameOver]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setCanInteract(true), 1200);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <motion.div
@@ -62,13 +72,15 @@ export default function GameOverScreen({
         >
           <button
             onClick={resetGame}
-            className="flex-1 py-4 px-8 bg-red-600/10 border border-red-600/50 text-red-500 font-bold tracking-widest uppercase hover:bg-red-600 hover:text-white transition-all duration-300 shadow-[0_0_20px_rgba(220,38,38,0.2)] hover:shadow-[0_0_30px_rgba(220,38,38,0.6)]"
+            disabled={!canInteract}
+            className="flex-1 py-4 px-8 bg-red-600/10 border border-red-600/50 text-red-500 font-bold tracking-widest uppercase hover:bg-red-600 hover:text-white transition-all duration-300 shadow-[0_0_20px_rgba(220,38,38,0.2)] hover:shadow-[0_0_30px_rgba(220,38,38,0.6)] disabled:pointer-events-none"
           >
             다시 도전하기
           </button>
           <button
             onClick={onExit}
-            className="flex-1 py-4 px-8 bg-transparent border border-zinc-700 text-zinc-500 font-bold tracking-widest uppercase hover:border-zinc-400 hover:text-zinc-300 transition-colors duration-300"
+            disabled={!canInteract}
+            className="flex-1 py-4 px-8 bg-transparent border border-zinc-700 text-zinc-500 font-bold tracking-widest uppercase hover:border-zinc-400 hover:text-zinc-300 transition-colors duration-300 disabled:pointer-events-none"
           >
             모드 선택으로
           </button>

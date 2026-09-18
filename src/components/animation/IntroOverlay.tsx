@@ -41,7 +41,7 @@ export default function IntroOverlay() {
     >
       <Image
         src="/IntroImage.webp"
-        alt="Daily life for environment"
+        alt="" // 장식용 배경 이미지 (스크린리더에 불필요한 정보 노출 방지)
         fill
         priority
         className="object-cover"

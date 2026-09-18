@@ -3,7 +3,7 @@ import { useGameStore } from "@/store/useGameStore";
 import { QuizItem } from "@/types/quiz";
 import { actionPool } from "@/data/actionData";
 
-const generateRandomQuizzes = (roundCount: number = 10): QuizItem[] => {
+export const generateRandomQuizzes = (roundCount: number = 10): QuizItem[] => {
   const generatedQuizzes: QuizItem[] = [];
 
   for (let i = 0; i < roundCount; i++) {

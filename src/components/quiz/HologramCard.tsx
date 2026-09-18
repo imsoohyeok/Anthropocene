@@ -11,15 +11,25 @@ export default function HologramCard({
   themeColor = "#00f2ff",
 }: HologramCardProps) {
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
+  // 새 질문으로 전환된 직후 잠깐 클릭을 막아, 이전 화면(다음 문제 버튼 등)에서
+  // 이어진 광클이 새 선택지를 곧바로 눌러버리는 것을 방지한다.
+  const [isReady, setIsReady] = useState(false);
+  const [renderedQuiz, setRenderedQuiz] = useState(quiz);
 
   const [playHover] = useSound("/sounds/drop_002.ogg", { volume: 0.1 });
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setSelectedKey(null);
-    }, 0);
+  // quiz가 바뀌면 렌더링 도중 동기적으로 선택 상태를 초기화
+  // (React 권장 패턴: https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes)
+  if (quiz !== renderedQuiz) {
+    setRenderedQuiz(quiz);
+    setSelectedKey(null);
+    setIsReady(false);
+  }
 
-    return () => clearTimeout(timer);
+  useEffect(() => {
+    const readyTimer = setTimeout(() => setIsReady(true), 300);
+
+    return () => clearTimeout(readyTimer);
   }, [quiz]);
 
   return (
@@ -50,7 +60,7 @@ export default function HologramCard({
             <motion.button
               key={key}
               onHoverStart={() => {
-                if (selectedKey === null) playHover();
+                if (isReady && selectedKey === null) playHover();
               }}
               // 동적 애니메이션: 선택 여부에 따라 크기, 투명도, 블러 효과 처리
               animate={{
@@ -67,14 +77,14 @@ export default function HologramCard({
               transition={{ duration: 0.3, ease: "easeOut" }}
               // 아무것도 선택되지 않았을 때만 Hover/Tap 애니메이션 활성화
               whileHover={
-                selectedKey === null
+                isReady && selectedKey === null
                   ? { scale: 1.02, backgroundColor: `${themeColor}1a` }
                   : {}
               }
-              whileTap={selectedKey === null ? { scale: 0.98 } : {}}
+              whileTap={isReady && selectedKey === null ? { scale: 0.98 } : {}}
               onClick={() => {
-                // 중복 클릭 방지: 이미 무언가 선택되었다면 무시
-                if (selectedKey !== null) return;
+                // 아직 전환 직후라 클릭을 막아둔 상태이거나, 이미 무언가 선택되었다면 무시
+                if (!isReady || selectedKey !== null) return;
 
                 setSelectedKey(key);
                 onAnswer(currentOption.isCorrect, quiz.penalty);

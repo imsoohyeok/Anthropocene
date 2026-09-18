@@ -38,7 +38,7 @@ export default function QuizRoom({ quiz, onAnswer }: QuizRoomProps) {
           >
             <Image
               src={config.bg}
-              alt={`${quiz.theme} background`}
+              alt="" // 장식용 배경 이미지 (질문/선택지는 별도 텍스트로 제공됨)
               fill
               priority
               className="object-cover"

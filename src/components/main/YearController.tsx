@@ -24,6 +24,8 @@ export default function YearController({ year, setYear }: YearControllerProps) {
             step="1"
             value={year}
             onChange={(e) => setYear(Number(e.target.value))}
+            aria-label="연도 선택"
+            aria-valuetext={`${year}년`}
             className="w-full h-0.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-red-600 hover:accent-red-500 transition-all"
           />
         </div>

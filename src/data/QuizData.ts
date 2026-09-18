@@ -1,6 +1,6 @@
 import { QuizItem } from "@/types/quiz";
 
-export const dummyQuizzes: QuizItem[] = [
+export const scenarioQuizzes: QuizItem[] = [
   {
     id: 1,
     question:
