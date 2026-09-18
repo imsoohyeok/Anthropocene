@@ -11,15 +11,9 @@
 
 ## 📸 스크린샷
 
-> 아래 3장의 스크린샷을 `docs/screenshots/`에 추가해주세요. (3D 지구 애니메이션과 퀴즈 배경은 WebGL 렌더링이 필요해 자동화 도구로는 캡처할 수 없었습니다 — 실제 브라우저에서 직접 캡처가 필요합니다.)
->
-> 1. `docs/screenshots/main-dashboard.png` — 메인 페이지: 연도 슬라이더 + 우주에 떠있는 지구 + 지표 카드
-> 2. `docs/screenshots/quiz.png` — 퀴즈 페이지: 테마별 배경 + 2지선다 홀로그램 카드
-> 3. `docs/screenshots/info.png` — 정보 페이지: 데이터 출처 목록
-
 | 메인 대시보드 | 퀴즈 미니게임 | 정보/출처 페이지 |
 | --- | --- | --- |
-| _(스크린샷 추가 예정)_ | _(스크린샷 추가 예정)_ | _(스크린샷 추가 예정)_ |
+| ![메인 대시보드](docs/screenshots/main-dashboard.png) | ![퀴즈 미니게임](docs/screenshots/quiz.png) | ![정보 및 출처 페이지](docs/screenshots/info.png) |
 
 ---
 
