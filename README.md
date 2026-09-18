@@ -68,16 +68,16 @@
 
 ```
 src/
-├─ app/                  # Next.js App Router 페이지
-│  ├─ page.tsx           # 메인 대시보드 (/)
-│  ├─ quiz/page.tsx      # 퀴즈 미니게임 (/quiz)
-│  ├─ info/page.tsx      # 데이터 출처 (/info)
-│  ├─ not-found.tsx      # 404 페이지
-│  ├─ error.tsx          # 에러 바운더리
-│  ├─ icon.tsx           # 파비콘 (동적 생성)
-│  ├─ opengraph-image.tsx # OG 이미지 (동적 생성)
-│  ├─ robots.ts          # robots.txt
-│  └─ sitemap.ts         # sitemap.xml
+├─ app/                    # Next.js App Router 페이지
+│  ├─ page.tsx             # 메인 대시보드 (/)
+│  ├─ quiz/page.tsx        # 퀴즈 미니게임 (/quiz)
+│  ├─ info/page.tsx        # 데이터 출처 (/info)
+│  ├─ not-found.tsx        # 404 페이지
+│  ├─ error.tsx            # 에러 바운더리
+│  ├─ icon.tsx             # 파비콘 (동적 생성)
+│  ├─ opengraph-image.tsx  # OG 이미지 (동적 생성)
+│  ├─ robots.ts            # robots.txt
+│  └─ sitemap.ts           # sitemap.xml
 ├─ components/           # UI 컴포넌트 (*.test.tsx 콜로케이트)
 │  ├─ animation/         # 인트로, 카메라 워크, 파티클 등 연출 컴포넌트
 │  ├─ main/              # 메인 대시보드 UI (지표 카드, 연도 슬라이더 등)
