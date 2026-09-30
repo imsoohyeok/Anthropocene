@@ -35,7 +35,7 @@ export const useGameStore = create<GameState>((set, get) => ({
     let newOverloadRate = state.overloadRate;
     let newScore = state.score;
 
-    // 정답이면 점수 증가, 오답이면 해수면 10% 상승 (기획에 따라 수치 조절 가능)
+    // 정답이면 점수 증가, 오답이면 문제별 penalty만큼 오염률 상승
     if (isCorrect) {
       newScore += 1;
     } else {

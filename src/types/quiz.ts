@@ -11,7 +11,7 @@ export type QuizItem = {
     B: QuizOption;
   };
   explanation: string;
-  penalty: number; // 틀렸을 때 올라갈 해수면 수치 (예: 20)
+  penalty: number; // 틀렸을 때 올라갈 오염률 수치 (예: 20)
   theme: "kitchen" | "living" | "utility" | "entrance" | "restroom" | "city";
   highlightObject?: HighlightObjectType;
 };
